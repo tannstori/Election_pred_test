@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-24T11:17:59.669275+00:00",
+  "generated_at_utc": "2026-03-24T20:47:35.625969+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -63,86 +63,56 @@
   "demo_nowcast": {
     "parties": [
       {
-        "party_id": "A",
-        "label": "F\u00f3lkaflokkurin",
-        "vote_share": 24.8,
-        "delta": 1.4,
-        "seat_mid": 9,
-        "seat_lo": 8,
-        "seat_hi": 10
+        "party_id": "C",
+        "label": "C",
+        "vote_share": 39.55432815922293,
+        "delta": 0.0,
+        "seat_mid": 1,
+        "seat_lo": 1,
+        "seat_hi": 1
       },
       {
         "party_id": "B",
-        "label": "Sambandsflokkurin",
-        "vote_share": 21.2,
-        "delta": -0.3,
-        "seat_mid": 7,
-        "seat_lo": 6,
-        "seat_hi": 8
-      },
-      {
-        "party_id": "C",
-        "label": "Javna\u00f0arflokkurin",
-        "vote_share": 22.4,
-        "delta": 0.9,
-        "seat_mid": 8,
-        "seat_lo": 7,
-        "seat_hi": 9
-      },
-      {
-        "party_id": "D",
-        "label": "Tj\u00f3\u00f0veldi",
-        "vote_share": 18.1,
-        "delta": -1.1,
-        "seat_mid": 6,
-        "seat_lo": 5,
-        "seat_hi": 7
+        "label": "B",
+        "vote_share": 26.81788747952615,
+        "delta": 0.0,
+        "seat_mid": 1,
+        "seat_lo": 1,
+        "seat_hi": 1
       },
       {
         "party_id": "E",
-        "label": "Frams\u00f3kn",
-        "vote_share": 5.8,
-        "delta": 0.2,
-        "seat_mid": 2,
-        "seat_lo": 1,
-        "seat_hi": 3
+        "label": "E",
+        "vote_share": 15.27883589821728,
+        "delta": 0.0,
+        "seat_mid": 0,
+        "seat_lo": 0,
+        "seat_hi": 0
+      },
+      {
+        "party_id": "A",
+        "label": "A",
+        "vote_share": 12.968041747609798,
+        "delta": 0.0,
+        "seat_mid": 0,
+        "seat_lo": 0,
+        "seat_hi": 0
+      },
+      {
+        "party_id": "H",
+        "label": "H",
+        "vote_share": 3.0502146077436914,
+        "delta": 0.0,
+        "seat_mid": 0,
+        "seat_lo": 0,
+        "seat_hi": 0
       }
     ],
     "timeline": [
       {
-        "t": "20:15",
-        "reported_pct": 8,
-        "uncertainty": 7.8
-      },
-      {
-        "t": "20:45",
-        "reported_pct": 17,
-        "uncertainty": 6.4
-      },
-      {
-        "t": "21:15",
-        "reported_pct": 31,
-        "uncertainty": 5.0
-      },
-      {
-        "t": "21:45",
-        "reported_pct": 48,
-        "uncertainty": 3.9
-      },
-      {
-        "t": "22:15",
-        "reported_pct": 66,
-        "uncertainty": 2.8
-      },
-      {
-        "t": "22:45",
-        "reported_pct": 81,
-        "uncertainty": 1.9
-      },
-      {
-        "t": "23:15",
-        "reported_pct": 93,
-        "uncertainty": 1.2
+        "t": "20:47",
+        "reported_pct": 3.060425655870519,
+        "uncertainty": 3.4182346495265357
       }
     ]
   },

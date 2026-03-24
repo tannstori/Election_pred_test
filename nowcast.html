@@ -1,15 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<script>
-  // GitHub Pages subfolder path fix
-  window.dashboardDataURL = (file) => {
-    const depth = (window.location.pathname.match(/\//g) || []).length;
-    if (depth > 1 && !window.location.pathname.endsWith('/')) {
-      return '../' + file;
-    }
-    return file;
-  };
-</script>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.25">
