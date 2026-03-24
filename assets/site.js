@@ -1,9 +1,24 @@
 (function () {
-  const PAYLOAD_CANDIDATES = [
-    'data/dashboard_payload.json',
-    './data/dashboard_payload.json',
-    '/dashboard/data/dashboard_payload.json'
-  ];
+  function buildPayloadCandidates() {
+    const origin = window.location.origin || '';
+    const pathname = window.location.pathname || '/';
+    const segments = pathname.split('/').filter(Boolean);
+    const projectBase = segments.length > 0 ? `/${segments[0]}` : '';
+    const currentDir = pathname.endsWith('/') ? pathname : pathname.replace(/[^/]*$/, '');
+    const candidates = [
+      'data/dashboard_payload.json',
+      './data/dashboard_payload.json',
+      '/data/dashboard_payload.json',
+      '/dashboard/data/dashboard_payload.json',
+      `${projectBase}/data/dashboard_payload.json`,
+      `${origin}${projectBase}/data/dashboard_payload.json`,
+      `${origin}${currentDir}data/dashboard_payload.json`,
+    ];
+
+    return [...new Set(candidates.filter(Boolean))];
+  }
+
+  const PAYLOAD_CANDIDATES = buildPayloadCandidates();
   const REPLAY_CANDIDATES = [
     '../reports/lv2022_night_replay_report.json',
     '/reports/lv2022_night_replay_report.json'
