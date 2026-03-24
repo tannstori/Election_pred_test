@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-24T21:42:47.891182+00:00",
+  "generated_at_utc": "2026-03-24T21:47:58.368315+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -65,7 +65,7 @@
       {
         "party_id": "C",
         "label": "C",
-        "vote_share": 37.73063251142583,
+        "vote_share": 37.8839398095095,
         "delta": 0.0,
         "seat_mid": 1,
         "seat_lo": 1,
@@ -74,7 +74,7 @@
       {
         "party_id": "B",
         "label": "B",
-        "vote_share": 26.596324926178788,
+        "vote_share": 27.669966748699068,
         "delta": 0.0,
         "seat_mid": 1,
         "seat_lo": 0,
@@ -83,7 +83,7 @@
       {
         "party_id": "A",
         "label": "A",
-        "vote_share": 20.39534315108428,
+        "vote_share": 18.094719242546635,
         "delta": 0.0,
         "seat_mid": 0,
         "seat_lo": 0,
@@ -92,7 +92,7 @@
       {
         "party_id": "E",
         "label": "E",
-        "vote_share": 12.403844345389231,
+        "vote_share": 14.309331028911725,
         "delta": 0.0,
         "seat_mid": 0,
         "seat_lo": 0,
@@ -101,7 +101,7 @@
       {
         "party_id": "H",
         "label": "H",
-        "vote_share": 2.5785702194888,
+        "vote_share": 2.4929082677387235,
         "delta": 0.0,
         "seat_mid": 0,
         "seat_lo": 0,
@@ -110,9 +110,9 @@
     ],
     "timeline": [
       {
-        "t": "21:42",
-        "reported_pct": 27.110528519671565,
-        "uncertainty": 2.5357863137846817
+        "t": "21:47",
+        "reported_pct": 31.620150381415332,
+        "uncertainty": 2.5559056068132056
       }
     ]
   },
