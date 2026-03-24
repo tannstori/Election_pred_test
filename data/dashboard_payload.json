@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-24T20:51:54.368922+00:00",
+  "generated_at_utc": "2026-03-24T20:53:43.356451+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -615,25 +615,25 @@
         "locality_code": "10285",
         "locality": "Koltur",
         "municipality_current": "T\u00f3rshavn municipality",
-        "population": NaN
+        "population": null
       },
       {
         "locality_code": "10101",
         "locality": "Mj\u00f8rkadalur",
         "municipality_current": "T\u00f3rshavn municipality",
-        "population": NaN
+        "population": null
       },
       {
         "locality_code": "10737",
         "locality": "M\u00fali",
         "municipality_current": "Hvannasund municipality",
-        "population": NaN
+        "population": null
       },
       {
         "locality_code": "10437",
         "locality": "Nesv\u00edk",
         "municipality_current": "Sunda municipality",
-        "population": NaN
+        "population": null
       },
       {
         "locality_code": "10100",
@@ -993,7 +993,7 @@
         "locality_code": "10928",
         "locality": "V\u00edkarbyrgi",
         "municipality_current": "Sumba municipality",
-        "population": NaN
+        "population": null
       }
     ]
   },
