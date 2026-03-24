@@ -1,0 +1,1732 @@
+{
+  "generated_at_utc": "2026-03-24T11:17:59.669275+00:00",
+  "phase_status": {
+    "phase1": {
+      "present": true,
+      "overall_status": "passed",
+      "failed_count": 0,
+      "timestamp": "2026-03-24 00:18:04.416462+00:00"
+    },
+    "phase3": {
+      "present": true,
+      "overall_status": "failed",
+      "failed_count": 2,
+      "timestamp": "2026-03-24 11:06:20.183913+00:00"
+    },
+    "phase4": {
+      "present": true,
+      "overall_status": "failed",
+      "failed_count": 3,
+      "timestamp": "2026-03-24 11:06:41.588085+00:00"
+    }
+  },
+  "model": {
+    "converged": false,
+    "fit_time_seconds": 5306.122243100006,
+    "n_divergences": 0,
+    "ess_bulk_min": 39.7169,
+    "rhat_max": 1.03893,
+    "ppc_status": "computed",
+    "coverage_turnout_90": 0.7828746177370031,
+    "coverage_vote_share_90": 0.5663299663299664,
+    "ppc_p_value_min": 0.804,
+    "ppc_party": [
+      {
+        "party_id": "party_1",
+        "ppc_p_value": 0.974
+      },
+      {
+        "party_id": "party_2",
+        "ppc_p_value": 0.996
+      },
+      {
+        "party_id": "party_3",
+        "ppc_p_value": 0.804
+      },
+      {
+        "party_id": "party_4",
+        "ppc_p_value": 0.838
+      },
+      {
+        "party_id": "party_5",
+        "ppc_p_value": 0.82
+      }
+    ],
+    "extended_fit": {}
+  },
+  "seat_reliability": {
+    "resume_approved": false,
+    "safe_mode": false,
+    "ess": 10000.0,
+    "sample_size": 200
+  },
+  "demo_nowcast": {
+    "parties": [
+      {
+        "party_id": "A",
+        "label": "F\u00f3lkaflokkurin",
+        "vote_share": 24.8,
+        "delta": 1.4,
+        "seat_mid": 9,
+        "seat_lo": 8,
+        "seat_hi": 10
+      },
+      {
+        "party_id": "B",
+        "label": "Sambandsflokkurin",
+        "vote_share": 21.2,
+        "delta": -0.3,
+        "seat_mid": 7,
+        "seat_lo": 6,
+        "seat_hi": 8
+      },
+      {
+        "party_id": "C",
+        "label": "Javna\u00f0arflokkurin",
+        "vote_share": 22.4,
+        "delta": 0.9,
+        "seat_mid": 8,
+        "seat_lo": 7,
+        "seat_hi": 9
+      },
+      {
+        "party_id": "D",
+        "label": "Tj\u00f3\u00f0veldi",
+        "vote_share": 18.1,
+        "delta": -1.1,
+        "seat_mid": 6,
+        "seat_lo": 5,
+        "seat_hi": 7
+      },
+      {
+        "party_id": "E",
+        "label": "Frams\u00f3kn",
+        "vote_share": 5.8,
+        "delta": 0.2,
+        "seat_mid": 2,
+        "seat_lo": 1,
+        "seat_hi": 3
+      }
+    ],
+    "timeline": [
+      {
+        "t": "20:15",
+        "reported_pct": 8,
+        "uncertainty": 7.8
+      },
+      {
+        "t": "20:45",
+        "reported_pct": 17,
+        "uncertainty": 6.4
+      },
+      {
+        "t": "21:15",
+        "reported_pct": 31,
+        "uncertainty": 5.0
+      },
+      {
+        "t": "21:45",
+        "reported_pct": 48,
+        "uncertainty": 3.9
+      },
+      {
+        "t": "22:15",
+        "reported_pct": 66,
+        "uncertainty": 2.8
+      },
+      {
+        "t": "22:45",
+        "reported_pct": 81,
+        "uncertainty": 1.9
+      },
+      {
+        "t": "23:15",
+        "reported_pct": 93,
+        "uncertainty": 1.2
+      }
+    ]
+  },
+  "data_audit": {
+    "consistency": {
+      "report": "local_data_consistency",
+      "counts": {
+        "elections": 16,
+        "sites": 90,
+        "parties": 14,
+        "turnout_final_site": 761,
+        "results_final_site_party": 5950,
+        "demographics_site_time": 370,
+        "stream_snapshots": 2,
+        "stream_site_status": 0,
+        "stream_site_party_partial": 0
+      },
+      "ready_for_training": true,
+      "ready_for_live_run": true
+    },
+    "municipality_resolution": {
+      "checks": {
+        "candidate_rows": 162,
+        "coverage_rows": 115,
+        "mapping_file": "config\\locality_municipality_mapping_template.csv",
+        "override_rows": 8,
+        "pending_candidates": 0,
+        "strict": true
+      },
+      "report": "data_quality"
+    },
+    "ib01031_summary": {
+      "ib01031_month": "2026M02",
+      "total_localities": 119,
+      "ib01031_mapped": 117,
+      "ib01031_unmapped": 2,
+      "municipality_counts": [
+        {
+          "municipality": "T\u00f3rshavn municipality",
+          "localities": 18
+        },
+        {
+          "municipality": "Sunda municipality",
+          "localities": 12
+        },
+        {
+          "municipality": "Runav\u00edk municipality",
+          "localities": 11
+        },
+        {
+          "municipality": "Klaksv\u00edk municipality",
+          "localities": 9
+        },
+        {
+          "municipality": "Hvannasund municipality",
+          "localities": 5
+        },
+        {
+          "municipality": "Kv\u00edv\u00edk municipality",
+          "localities": 5
+        },
+        {
+          "municipality": "Sj\u00f3var municipality",
+          "localities": 5
+        },
+        {
+          "municipality": "Tv\u00f8royri municipality",
+          "localities": 5
+        },
+        {
+          "municipality": "Sumba municipality",
+          "localities": 4
+        },
+        {
+          "municipality": "S\u00f8rv\u00e1gur municipality",
+          "localities": 4
+        },
+        {
+          "municipality": "Ei\u00f0i municipality",
+          "localities": 3
+        },
+        {
+          "municipality": "Eystur municipality",
+          "localities": 3
+        },
+        {
+          "municipality": "H\u00fasav\u00edk municipality",
+          "localities": 3
+        },
+        {
+          "municipality": "Nes municipality",
+          "localities": 3
+        },
+        {
+          "municipality": "Sk\u00e1lafj\u00f8r\u00f0ur, Runav\u00edk municipality",
+          "localities": 3
+        },
+        {
+          "municipality": "V\u00e1gar municipality",
+          "localities": 3
+        },
+        {
+          "municipality": "Fuglafj\u00f8r\u00f0ur municipality",
+          "localities": 2
+        },
+        {
+          "municipality": "Fugloy municipality",
+          "localities": 2
+        },
+        {
+          "municipality": "Hvalba municipality",
+          "localities": 2
+        },
+        {
+          "municipality": "Kunoy municipality",
+          "localities": 2
+        },
+        {
+          "municipality": "Sk\u00e1lafj\u00f8r\u00f0ur, Eystur municipality",
+          "localities": 2
+        },
+        {
+          "municipality": "Sk\u00fagvoy municipality",
+          "localities": 2
+        },
+        {
+          "municipality": "nan",
+          "localities": 2
+        },
+        {
+          "municipality": "F\u00e1mjin municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Hov municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Porkeri municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Sandur municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Skopun municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Sk\u00e1lav\u00edk municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Vestmanna municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "Vi\u00f0arei\u00f0i municipality",
+          "localities": 1
+        },
+        {
+          "municipality": "V\u00e1gur municipality",
+          "localities": 1
+        }
+      ]
+    },
+    "mapping_rows": [
+      {
+        "locality_code": "10700",
+        "locality": "Klaksv\u00edk",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 5156.0
+      },
+      {
+        "locality_code": "10188",
+        "locality": "Hoyv\u00edk",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 4704.0
+      },
+      {
+        "locality_code": "10160",
+        "locality": "Argir",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 2645.0
+      },
+      {
+        "locality_code": "10530",
+        "locality": "Fuglafj\u00f8r\u00f0ur",
+        "municipality_current": "Fuglafj\u00f8r\u00f0ur municipality",
+        "population": 1627.0
+      },
+      {
+        "locality_code": "10370",
+        "locality": "Mi\u00f0v\u00e1gur",
+        "municipality_current": "V\u00e1gar municipality",
+        "population": 1136.0
+      },
+      {
+        "locality_code": "10520",
+        "locality": "Leirv\u00edk",
+        "municipality_current": "Eystur municipality",
+        "population": 1034.0
+      },
+      {
+        "locality_code": "10410",
+        "locality": "Kollafj\u00f8r\u00f0ur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 824.0
+      },
+      {
+        "locality_code": "10470",
+        "locality": "Ei\u00f0i",
+        "municipality_current": "Ei\u00f0i municipality",
+        "population": 691.0
+      },
+      {
+        "locality_code": "10512",
+        "locality": "Nor\u00f0rag\u00f8ta",
+        "municipality_current": "Eystur municipality",
+        "population": 656.0
+      },
+      {
+        "locality_code": "10850",
+        "locality": "Hvalba",
+        "municipality_current": "Hvalba municipality",
+        "population": 563.0
+      },
+      {
+        "locality_code": "10625",
+        "locality": "Glyvrar",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 475.0
+      },
+      {
+        "locality_code": "10340",
+        "locality": "Kv\u00edv\u00edk",
+        "municipality_current": "Kv\u00edv\u00edk municipality",
+        "population": 385.0
+      },
+      {
+        "locality_code": "10655",
+        "locality": "Nes, Eysturoy",
+        "municipality_current": "Nes municipality",
+        "population": 372.0
+      },
+      {
+        "locality_code": "10420",
+        "locality": "H\u00f3sv\u00edk",
+        "municipality_current": "Sunda municipality",
+        "population": 316.0
+      },
+      {
+        "locality_code": "10740",
+        "locality": "Hvannasund",
+        "municipality_current": "Hvannasund municipality",
+        "population": 271.0
+      },
+      {
+        "locality_code": "10825",
+        "locality": "Fro\u00f0ba",
+        "municipality_current": "Tv\u00f8royri municipality",
+        "population": 257.0
+      },
+      {
+        "locality_code": "10430",
+        "locality": "Hvalv\u00edk",
+        "municipality_current": "Sunda municipality",
+        "population": 255.0
+      },
+      {
+        "locality_code": "10180",
+        "locality": "Kaldbak",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 238.0
+      },
+      {
+        "locality_code": "10627",
+        "locality": "Lamba",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 157.0
+      },
+      {
+        "locality_code": "10725",
+        "locality": "Nor\u00f0oyri",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 152.0
+      },
+      {
+        "locality_code": "10730",
+        "locality": "Nor\u00f0depil",
+        "municipality_current": "Hvannasund municipality",
+        "population": 146.0
+      },
+      {
+        "locality_code": "10335",
+        "locality": "Leynar",
+        "municipality_current": "Kv\u00edv\u00edk municipality",
+        "population": 121.0
+      },
+      {
+        "locality_code": "10440",
+        "locality": "Hald\u00f3rsv\u00edk",
+        "municipality_current": "Sunda municipality",
+        "population": 118.0
+      },
+      {
+        "locality_code": "10187",
+        "locality": "Hv\u00edtanes",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 109.0
+      },
+      {
+        "locality_code": "10960",
+        "locality": "Hov",
+        "municipality_current": "Hov municipality",
+        "population": 106.0
+      },
+      {
+        "locality_code": "10780",
+        "locality": "Kunoy",
+        "municipality_current": "Kunoy municipality",
+        "population": 81.0
+      },
+      {
+        "locality_code": "10494",
+        "locality": "Innan Glyvur",
+        "municipality_current": "Sj\u00f3var municipality",
+        "population": 80.0
+      },
+      {
+        "locality_code": "10926",
+        "locality": "Lopra",
+        "municipality_current": "Sumba municipality",
+        "population": 80.0
+      },
+      {
+        "locality_code": "10386",
+        "locality": "B\u00f8ur",
+        "municipality_current": "S\u00f8rv\u00e1gur municipality",
+        "population": 72.0
+      },
+      {
+        "locality_code": "10175",
+        "locality": "Kirkjub\u00f8ur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 72.0
+      },
+      {
+        "locality_code": "10870",
+        "locality": "F\u00e1mjin",
+        "municipality_current": "F\u00e1mjin municipality",
+        "population": 71.0
+      },
+      {
+        "locality_code": "10230",
+        "locality": "H\u00fasav\u00edk",
+        "municipality_current": "H\u00fasav\u00edk municipality",
+        "population": 65.0
+      },
+      {
+        "locality_code": "10785",
+        "locality": "Haraldssund",
+        "municipality_current": "Kunoy municipality",
+        "population": 64.0
+      },
+      {
+        "locality_code": "10477",
+        "locality": "Funningsfj\u00f8r\u00f0ur",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 61.0
+      },
+      {
+        "locality_code": "10511",
+        "locality": "G\u00f8tugj\u00f3gv",
+        "municipality_current": "Eystur municipality",
+        "population": 51.0
+      },
+      {
+        "locality_code": "10475",
+        "locality": "Funningur",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 41.0
+      },
+      {
+        "locality_code": "10796",
+        "locality": "H\u00fasar",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 41.0
+      },
+      {
+        "locality_code": "10438",
+        "locality": "Langasandur",
+        "municipality_current": "Sunda municipality",
+        "population": 41.0
+      },
+      {
+        "locality_code": "10235",
+        "locality": "Dalur",
+        "municipality_current": "H\u00fasav\u00edk municipality",
+        "population": 38.0
+      },
+      {
+        "locality_code": "10466",
+        "locality": "Lj\u00f3s\u00e1",
+        "municipality_current": "Ei\u00f0i municipality",
+        "population": 33.0
+      },
+      {
+        "locality_code": "10766",
+        "locality": "Kirkja",
+        "municipality_current": "Fugloy municipality",
+        "population": 31.0
+      },
+      {
+        "locality_code": "10495",
+        "locality": "Kolbeinagj\u00f3gv",
+        "municipality_current": "Sj\u00f3var municipality",
+        "population": 29.0
+      },
+      {
+        "locality_code": "10797",
+        "locality": "Mikladalur",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 29.0
+      },
+      {
+        "locality_code": "10496",
+        "locality": "Morskranes",
+        "municipality_current": "Sj\u00f3var municipality",
+        "population": 23.0
+      },
+      {
+        "locality_code": "10476",
+        "locality": "Gj\u00f3gv",
+        "municipality_current": "Sunda municipality",
+        "population": 19.0
+      },
+      {
+        "locality_code": "10767",
+        "locality": "Hattarv\u00edk",
+        "municipality_current": "Fugloy municipality",
+        "population": 18.0
+      },
+      {
+        "locality_code": "10387",
+        "locality": "G\u00e1sadalur",
+        "municipality_current": "S\u00f8rv\u00e1gur municipality",
+        "population": 15.0
+      },
+      {
+        "locality_code": "10280",
+        "locality": "Hestur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 14.0
+      },
+      {
+        "locality_code": "10388",
+        "locality": "Mykines",
+        "municipality_current": "S\u00f8rv\u00e1gur municipality",
+        "population": 13.0
+      },
+      {
+        "locality_code": "10478",
+        "locality": "Elduv\u00edk",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 12.0
+      },
+      {
+        "locality_code": "10626",
+        "locality": "Lambarei\u00f0i",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 12.0
+      },
+      {
+        "locality_code": "10927",
+        "locality": "Akrar",
+        "municipality_current": "Sumba municipality",
+        "population": 11.0
+      },
+      {
+        "locality_code": "10695",
+        "locality": "Hellurnar",
+        "municipality_current": "Fuglafj\u00f8r\u00f0ur municipality",
+        "population": 10.0
+      },
+      {
+        "locality_code": "10185",
+        "locality": "Kaldbaksbotnur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 7.0
+      },
+      {
+        "locality_code": "10735",
+        "locality": "Depil",
+        "municipality_current": "Hvannasund municipality",
+        "population": 5.0
+      },
+      {
+        "locality_code": "10285",
+        "locality": "Koltur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": NaN
+      },
+      {
+        "locality_code": "10101",
+        "locality": "Mj\u00f8rkadalur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": NaN
+      },
+      {
+        "locality_code": "10737",
+        "locality": "M\u00fali",
+        "municipality_current": "Hvannasund municipality",
+        "population": NaN
+      },
+      {
+        "locality_code": "10437",
+        "locality": "Nesv\u00edk",
+        "municipality_current": "Sunda municipality",
+        "population": NaN
+      },
+      {
+        "locality_code": "10100",
+        "locality": "T\u00f3rshavn",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 14221.0
+      },
+      {
+        "locality_code": "10900",
+        "locality": "V\u00e1gur",
+        "municipality_current": "V\u00e1gur municipality",
+        "population": 1330.0
+      },
+      {
+        "locality_code": "10350",
+        "locality": "Vestmanna",
+        "municipality_current": "Vestmanna municipality",
+        "population": 1261.0
+      },
+      {
+        "locality_code": "10600",
+        "locality": "Saltangar\u00e1",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 1249.0
+      },
+      {
+        "locality_code": "10380",
+        "locality": "S\u00f8rv\u00e1gur",
+        "municipality_current": "S\u00f8rv\u00e1gur municipality",
+        "population": 1154.0
+      },
+      {
+        "locality_code": "10490",
+        "locality": "Strendur",
+        "municipality_current": "Sj\u00f3var municipality",
+        "population": 1136.0
+      },
+      {
+        "locality_code": "10650",
+        "locality": "Toftir",
+        "municipality_current": "Nes municipality",
+        "population": 1085.0
+      },
+      {
+        "locality_code": "10360",
+        "locality": "Sandav\u00e1gur",
+        "municipality_current": "V\u00e1gar municipality",
+        "population": 1009.0
+      },
+      {
+        "locality_code": "10800",
+        "locality": "Tv\u00f8royri",
+        "municipality_current": "Tv\u00f8royri municipality",
+        "population": 850.0
+      },
+      {
+        "locality_code": "10480",
+        "locality": "Sk\u00e1la",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 791.0
+      },
+      {
+        "locality_code": "10620",
+        "locality": "Runav\u00edk",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 562.0
+      },
+      {
+        "locality_code": "10210",
+        "locality": "Sandur",
+        "municipality_current": "Sandur municipality",
+        "population": 549.0
+      },
+      {
+        "locality_code": "10826",
+        "locality": "Trongisv\u00e1gur",
+        "municipality_current": "Tv\u00f8royri municipality",
+        "population": 520.0
+      },
+      {
+        "locality_code": "10513",
+        "locality": "Sy\u00f0rug\u00f8ta",
+        "municipality_current": "Sk\u00e1lafj\u00f8r\u00f0ur, Eystur municipality",
+        "population": 517.0
+      },
+      {
+        "locality_code": "10240",
+        "locality": "Skopun",
+        "municipality_current": "Skopun municipality",
+        "population": 490.0
+      },
+      {
+        "locality_code": "10640",
+        "locality": "Rituv\u00edk",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 347.0
+      },
+      {
+        "locality_code": "10660",
+        "locality": "S\u00f8ldarfj\u00f8r\u00f0ur",
+        "municipality_current": "Sk\u00e1lafj\u00f8r\u00f0ur, Runav\u00edk municipality",
+        "population": 342.0
+      },
+      {
+        "locality_code": "10750",
+        "locality": "Vi\u00f0arei\u00f0i",
+        "municipality_current": "Vi\u00f0arei\u00f0i municipality",
+        "population": 333.0
+      },
+      {
+        "locality_code": "10435",
+        "locality": "Streymnes",
+        "municipality_current": "Sunda municipality",
+        "population": 327.0
+      },
+      {
+        "locality_code": "10950",
+        "locality": "Porkeri",
+        "municipality_current": "Porkeri municipality",
+        "population": 324.0
+      },
+      {
+        "locality_code": "10460",
+        "locality": "Nor\u00f0sk\u00e1li",
+        "municipality_current": "Sunda municipality",
+        "population": 315.0
+      },
+      {
+        "locality_code": "10176",
+        "locality": "Velbasta\u00f0ur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 262.0
+      },
+      {
+        "locality_code": "10970",
+        "locality": "Sumba",
+        "municipality_current": "Sumba municipality",
+        "population": 243.0
+      },
+      {
+        "locality_code": "10270",
+        "locality": "N\u00f3lsoy",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 222.0
+      },
+      {
+        "locality_code": "10450",
+        "locality": "Oyri",
+        "municipality_current": "Sunda municipality",
+        "population": 191.0
+      },
+      {
+        "locality_code": "10220",
+        "locality": "Sk\u00e1lav\u00edk",
+        "municipality_current": "Sk\u00e1lav\u00edk municipality",
+        "population": 169.0
+      },
+      {
+        "locality_code": "10656",
+        "locality": "Saltnes",
+        "municipality_current": "Nes municipality",
+        "population": 162.0
+      },
+      {
+        "locality_code": "10400",
+        "locality": "Oyrarbakki",
+        "municipality_current": "Sunda municipality",
+        "population": 158.0
+      },
+      {
+        "locality_code": "10416",
+        "locality": "Signab\u00f8ur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 150.0
+      },
+      {
+        "locality_code": "10485",
+        "locality": "Sk\u00e1lafj\u00f8r\u00f0ur, Runav\u00edk municipality",
+        "municipality_current": "nan",
+        "population": 131.0
+      },
+      {
+        "locality_code": "10690",
+        "locality": "Oyndarfj\u00f8r\u00f0ur",
+        "municipality_current": "Runav\u00edk municipality",
+        "population": 127.0
+      },
+      {
+        "locality_code": "10645",
+        "locality": "\u00c6\u00f0uv\u00edk",
+        "municipality_current": "Sk\u00e1lafj\u00f8r\u00f0ur, Runav\u00edk municipality",
+        "population": 94.0
+      },
+      {
+        "locality_code": "10727",
+        "locality": "\u00c1rnafj\u00f8r\u00f0ur",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 68.0
+      },
+      {
+        "locality_code": "10860",
+        "locality": "Sandv\u00edk",
+        "municipality_current": "Hvalba municipality",
+        "population": 65.0
+      },
+      {
+        "locality_code": "10665",
+        "locality": "Skipanes",
+        "municipality_current": "Sk\u00e1lafj\u00f8r\u00f0ur, Runav\u00edk municipality",
+        "population": 58.0
+      },
+      {
+        "locality_code": "10726",
+        "locality": "\u00c1nirnar",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 58.0
+      },
+      {
+        "locality_code": "10801",
+        "locality": "\u00d8r\u00f0av\u00edksl\u00ed\u00f0",
+        "municipality_current": "Tv\u00f8royri municipality",
+        "population": 48.0
+      },
+      {
+        "locality_code": "10445",
+        "locality": "Tj\u00f8rnuv\u00edk",
+        "municipality_current": "Sunda municipality",
+        "population": 45.0
+      },
+      {
+        "locality_code": "10385",
+        "locality": "Vatnsoyrar",
+        "municipality_current": "V\u00e1gar municipality",
+        "population": 45.0
+      },
+      {
+        "locality_code": "10358",
+        "locality": "V\u00e1lur",
+        "municipality_current": "Kv\u00edv\u00edk municipality",
+        "population": 44.0
+      },
+      {
+        "locality_code": "10465",
+        "locality": "Sv\u00edn\u00e1ir",
+        "municipality_current": "Ei\u00f0i municipality",
+        "population": 41.0
+      },
+      {
+        "locality_code": "10330",
+        "locality": "Stykki\u00f0",
+        "municipality_current": "Kv\u00edv\u00edk municipality",
+        "population": 40.0
+      },
+      {
+        "locality_code": "10415",
+        "locality": "Oyrareingir",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 39.0
+      },
+      {
+        "locality_code": "10497",
+        "locality": "Selatra\u00f0",
+        "municipality_current": "Sj\u00f3var municipality",
+        "population": 37.0
+      },
+      {
+        "locality_code": "10666",
+        "locality": "Undir G\u00f8tuei\u00f0i",
+        "municipality_current": "Sk\u00e1lafj\u00f8r\u00f0ur, Eystur municipality",
+        "population": 30.0
+      },
+      {
+        "locality_code": "10260",
+        "locality": "Sk\u00fagvoy",
+        "municipality_current": "Sk\u00fagvoy municipality",
+        "population": 29.0
+      },
+      {
+        "locality_code": "10765",
+        "locality": "Sv\u00ednoy",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 29.0
+      },
+      {
+        "locality_code": "10827",
+        "locality": "\u00d8r\u00f0av\u00edk",
+        "municipality_current": "Tv\u00f8royri municipality",
+        "population": 25.0
+      },
+      {
+        "locality_code": "10798",
+        "locality": "Tr\u00f8llanes",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 14.0
+      },
+      {
+        "locality_code": "10436",
+        "locality": "Saksun",
+        "municipality_current": "Sunda municipality",
+        "population": 13.0
+      },
+      {
+        "locality_code": "10336",
+        "locality": "Sk\u00e6lingur",
+        "municipality_current": "Kv\u00edv\u00edk municipality",
+        "population": 13.0
+      },
+      {
+        "locality_code": "10178",
+        "locality": "Nor\u00f0radalur",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 9.0
+      },
+      {
+        "locality_code": "10236",
+        "locality": "Skarvanes",
+        "municipality_current": "H\u00fasav\u00edk municipality",
+        "population": 9.0
+      },
+      {
+        "locality_code": "10795",
+        "locality": "Sy\u00f0radalur, Kalsoy",
+        "municipality_current": "Klaksv\u00edk municipality",
+        "population": 9.0
+      },
+      {
+        "locality_code": "10177",
+        "locality": "Sy\u00f0radalur, Streymoy",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 8.0
+      },
+      {
+        "locality_code": "10486",
+        "locality": "Sk\u00e1lafj\u00f8r\u00f0ur, Eystur municipality",
+        "municipality_current": "nan",
+        "population": 5.0
+      },
+      {
+        "locality_code": "10286",
+        "locality": "St\u00f3ra D\u00edmun",
+        "municipality_current": "Sk\u00fagvoy municipality",
+        "population": 5.0
+      },
+      {
+        "locality_code": "10736",
+        "locality": "Nor\u00f0toftir",
+        "municipality_current": "Hvannasund municipality",
+        "population": 3.0
+      },
+      {
+        "locality_code": "10186",
+        "locality": "Sund",
+        "municipality_current": "T\u00f3rshavn municipality",
+        "population": 1.0
+      },
+      {
+        "locality_code": "10928",
+        "locality": "V\u00edkarbyrgi",
+        "municipality_current": "Sumba municipality",
+        "population": NaN
+      }
+    ]
+  },
+  "replays": [
+    {
+      "file": "lv2022_night_replay_report.json",
+      "election": "L\u00f8gtingsval 2022",
+      "source": "https://kvf.fo/val-historik/lv2022/",
+      "n_updates": 57,
+      "final_timestamp": "23:45:46",
+      "summary": {
+        "first_update": {
+          "timestamp": "20:18:47",
+          "reported_pct": 1.7543859649122806,
+          "reported_votes": 8,
+          "mae_model": 0.16360083457921218,
+          "mae_naive": 0.13771428571428573,
+          "improvement_pct": -18.797286520174804
+        },
+        "mid_update": {
+          "timestamp": "21:08:13",
+          "reported_pct": 7.6,
+          "reported_votes": 2973,
+          "mae_model": 0.017204729777603244,
+          "mae_naive": 0.017714285714285707,
+          "improvement_pct": 2.876525449013903
+        },
+        "last_update": {
+          "timestamp": "23:45:46",
+          "reported_pct": 100.0,
+          "reported_votes": 34208,
+          "mae_model": 0.010780146606095472,
+          "mae_naive": 0.0,
+          "improvement_pct": -10780.14660609547
+        },
+        "avg_improvement_pct": -194.094208157081,
+        "avg_improvement_pct_early_25": -7.64439595989298,
+        "best_improvement_pct": 31.01620708761482,
+        "worst_improvement_pct": -10780.14660609547
+      },
+      "trace": [
+        {
+          "timestamp": "20:18:47",
+          "reported_pct": 1.7543859649122806,
+          "reported_votes": 8,
+          "mae_model": 0.16360083457921218,
+          "mae_naive": 0.13771428571428573,
+          "improvement_pct": -18.797286520174804
+        },
+        {
+          "timestamp": "20:20:35",
+          "reported_pct": 0.1,
+          "reported_votes": 55,
+          "mae_model": 0.14211819112780855,
+          "mae_naive": 0.12685714285714286,
+          "improvement_pct": -12.030105618767992
+        },
+        {
+          "timestamp": "20:22:02",
+          "reported_pct": 0.2,
+          "reported_votes": 69,
+          "mae_model": 0.12400145638627988,
+          "mae_naive": 0.10257142857142856,
+          "improvement_pct": -20.8927847777102
+        },
+        {
+          "timestamp": "20:22:57",
+          "reported_pct": 0.2,
+          "reported_votes": 81,
+          "mae_model": 0.11087069894862776,
+          "mae_naive": 0.07987473187473189,
+          "improvement_pct": -38.80572284424951
+        },
+        {
+          "timestamp": "20:24:36",
+          "reported_pct": 0.2,
+          "reported_votes": 97,
+          "mae_model": 0.09705611900290531,
+          "mae_naive": 0.06899329242186387,
+          "improvement_pct": -40.67471720214408
+        },
+        {
+          "timestamp": "20:26:50",
+          "reported_pct": 0.4,
+          "reported_votes": 153,
+          "mae_model": 0.08776443594981324,
+          "mae_naive": 0.074993850993851,
+          "improvement_pct": -17.028842747399842
+        },
+        {
+          "timestamp": "20:28:25",
+          "reported_pct": 0.5,
+          "reported_votes": 182,
+          "mae_model": 0.07296344718911271,
+          "mae_naive": 0.05685714285714287,
+          "improvement_pct": -28.327670935625346
+        },
+        {
+          "timestamp": "20:29:14",
+          "reported_pct": 0.5,
+          "reported_votes": 200,
+          "mae_model": 0.0648908176354004,
+          "mae_naive": 0.05583183183183186,
+          "improvement_pct": -16.225485545333065
+        },
+        {
+          "timestamp": "20:29:53",
+          "reported_pct": 0.6,
+          "reported_votes": 223,
+          "mae_model": 0.06368969647129383,
+          "mae_naive": 0.060571428571428575,
+          "improvement_pct": -5.1480837969473505
+        },
+        {
+          "timestamp": "20:30:31",
+          "reported_pct": 0.6,
+          "reported_votes": 250,
+          "mae_model": 0.061494602624744654,
+          "mae_naive": 0.0622857142857143,
+          "improvement_pct": 1.2701334006393368
+        },
+        {
+          "timestamp": "20:33:06",
+          "reported_pct": 0.7,
+          "reported_votes": 285,
+          "mae_model": 0.05826096744222835,
+          "mae_naive": 0.05914285714285716,
+          "improvement_pct": 1.4911178513047487
+        },
+        {
+          "timestamp": "20:35:09",
+          "reported_pct": 0.8,
+          "reported_votes": 302,
+          "mae_model": 0.05526533640585838,
+          "mae_naive": 0.054285714285714284,
+          "improvement_pct": -1.804567063423334
+        },
+        {
+          "timestamp": "20:35:56",
+          "reported_pct": 0.9,
+          "reported_votes": 341,
+          "mae_model": 0.05399028988033388,
+          "mae_naive": 0.04942857142857143,
+          "improvement_pct": -9.22891016252518
+        },
+        {
+          "timestamp": "20:36:39",
+          "reported_pct": 1.1,
+          "reported_votes": 417,
+          "mae_model": 0.04374583545547018,
+          "mae_naive": 0.03257142857142858,
+          "improvement_pct": -34.30738955626807
+        },
+        {
+          "timestamp": "20:37:39",
+          "reported_pct": 1.2,
+          "reported_votes": 453,
+          "mae_model": 0.039535528360137864,
+          "mae_naive": 0.03771428571428572,
+          "improvement_pct": -4.8290524700625
+        },
+        {
+          "timestamp": "20:38:38",
+          "reported_pct": 1.4,
+          "reported_votes": 558,
+          "mae_model": 0.03596639916108195,
+          "mae_naive": 0.03314285714285715,
+          "improvement_pct": -8.519307813609315
+        },
+        {
+          "timestamp": "20:39:28",
+          "reported_pct": 1.5,
+          "reported_votes": 599,
+          "mae_model": 0.03263438972894077,
+          "mae_naive": 0.028430712144997865,
+          "improvement_pct": -14.7856921856335
+        },
+        {
+          "timestamp": "20:40:14",
+          "reported_pct": 1.7,
+          "reported_votes": 671,
+          "mae_model": 0.028935517309560906,
+          "mae_naive": 0.024571428571428574,
+          "improvement_pct": -17.760826259840883
+        },
+        {
+          "timestamp": "20:41:30",
+          "reported_pct": 1.9,
+          "reported_votes": 734,
+          "mae_model": 0.02573179467913906,
+          "mae_naive": 0.024149279292136453,
+          "improvement_pct": -6.553054307992989
+        },
+        {
+          "timestamp": "20:45:56",
+          "reported_pct": 2.0,
+          "reported_votes": 767,
+          "mae_model": 0.027528718086332917,
+          "mae_naive": 0.02857142857142858,
+          "improvement_pct": 3.649486697834822
+        },
+        {
+          "timestamp": "20:48:20",
+          "reported_pct": 2.2,
+          "reported_votes": 843,
+          "mae_model": 0.024159778790921016,
+          "mae_naive": 0.021428571428571425,
+          "improvement_pct": -12.745634357631426
+        },
+        {
+          "timestamp": "20:52:45",
+          "reported_pct": 2.4,
+          "reported_votes": 954,
+          "mae_model": 0.021355484545779645,
+          "mae_naive": 0.022151277294134453,
+          "improvement_pct": 3.5925366189403922
+        },
+        {
+          "timestamp": "20:55:44",
+          "reported_pct": 2.9,
+          "reported_votes": 1134,
+          "mae_model": 0.01642014638747356,
+          "mae_naive": 0.01958186758186759,
+          "improvement_pct": 16.146167780859273
+        },
+        {
+          "timestamp": "20:56:28",
+          "reported_pct": 3.2,
+          "reported_votes": 1255,
+          "mae_model": 0.017783082878305125,
+          "mae_naive": 0.015615527329813046,
+          "improvement_pct": -13.880770739991593
+        },
+        {
+          "timestamp": "20:57:38",
+          "reported_pct": 3.7,
+          "reported_votes": 1434,
+          "mae_model": 0.013319483138920927,
+          "mae_naive": 0.014741884741884743,
+          "improvement_pct": 9.64870929239108
+        },
+        {
+          "timestamp": "20:59:43",
+          "reported_pct": 4.0,
+          "reported_votes": 1543,
+          "mae_model": 0.013010723779513511,
+          "mae_naive": 0.01250793650793651,
+          "improvement_pct": -4.019745952963337
+        },
+        {
+          "timestamp": "21:00:30",
+          "reported_pct": 4.2,
+          "reported_votes": 1624,
+          "mae_model": 0.011916083338001385,
+          "mae_naive": 0.011142857142857137,
+          "improvement_pct": -6.939209443602231
+        },
+        {
+          "timestamp": "21:03:01",
+          "reported_pct": 6.8,
+          "reported_votes": 2643,
+          "mae_model": 0.0151839091602305,
+          "mae_naive": 0.022010835471913313,
+          "improvement_pct": 31.01620708761482
+        },
+        {
+          "timestamp": "21:08:13",
+          "reported_pct": 7.6,
+          "reported_votes": 2973,
+          "mae_model": 0.017204729777603244,
+          "mae_naive": 0.017714285714285707,
+          "improvement_pct": 2.876525449013903
+        },
+        {
+          "timestamp": "21:09:25",
+          "reported_pct": 8.2,
+          "reported_votes": 3207,
+          "mae_model": 0.017559899553450796,
+          "mae_naive": 0.01657142857142857,
+          "improvement_pct": -5.964911098409983
+        },
+        {
+          "timestamp": "21:13:17",
+          "reported_pct": 9.8,
+          "reported_votes": 3833,
+          "mae_model": 0.016435084524895636,
+          "mae_naive": 0.01605936920222634,
+          "improvement_pct": -2.339539728728636
+        },
+        {
+          "timestamp": "21:14:32",
+          "reported_pct": 11.6,
+          "reported_votes": 4509,
+          "mae_model": 0.012018743414108427,
+          "mae_naive": 0.010141287284144429,
+          "improvement_pct": -18.51299620413415
+        },
+        {
+          "timestamp": "21:15:47",
+          "reported_pct": 12.6,
+          "reported_votes": 4907,
+          "mae_model": 0.013310116207448439,
+          "mae_naive": 0.011857285857285859,
+          "improvement_pct": -12.252638315790202
+        },
+        {
+          "timestamp": "21:19:45",
+          "reported_pct": 12.7,
+          "reported_votes": 4942,
+          "mae_model": 0.012271359177759242,
+          "mae_naive": 0.01157128557128558,
+          "improvement_pct": -6.050093588658042
+        },
+        {
+          "timestamp": "21:21:33",
+          "reported_pct": 13.1,
+          "reported_votes": 5118,
+          "mae_model": 0.01399170139059414,
+          "mae_naive": 0.013428571428571432,
+          "improvement_pct": -4.193520993786128
+        },
+        {
+          "timestamp": "21:25:24",
+          "reported_pct": 14.3,
+          "reported_votes": 5571,
+          "mae_model": 0.01581498460669308,
+          "mae_naive": 0.014285714285714294,
+          "improvement_pct": -10.704892246851484
+        },
+        {
+          "timestamp": "21:26:22",
+          "reported_pct": 15.3,
+          "reported_votes": 5988,
+          "mae_model": 0.014050441196083044,
+          "mae_naive": 0.012571428571428575,
+          "improvement_pct": -11.764873150660543
+        },
+        {
+          "timestamp": "21:27:59",
+          "reported_pct": 16.0,
+          "reported_votes": 6228,
+          "mae_model": 0.013024849022166055,
+          "mae_naive": 0.012571428571428579,
+          "improvement_pct": -3.6067535854117416
+        },
+        {
+          "timestamp": "21:29:59",
+          "reported_pct": 18.5,
+          "reported_votes": 7202,
+          "mae_model": 0.011685961521787056,
+          "mae_naive": 0.012285714285714287,
+          "improvement_pct": 4.881708543593739
+        },
+        {
+          "timestamp": "21:31:07",
+          "reported_pct": 20.6,
+          "reported_votes": 8049,
+          "mae_model": 0.012272998203123883,
+          "mae_naive": 0.01274588874588875,
+          "improvement_pct": 3.7101417734985414
+        },
+        {
+          "timestamp": "21:36:56",
+          "reported_pct": 22.1,
+          "reported_votes": 8604,
+          "mae_model": 0.013927424527729923,
+          "mae_naive": 0.013714285714285719,
+          "improvement_pct": -1.5541371813639886
+        },
+        {
+          "timestamp": "21:39:30",
+          "reported_pct": 23.4,
+          "reported_votes": 9129,
+          "mae_model": 0.012105341996043614,
+          "mae_naive": 0.012285714285714289,
+          "improvement_pct": 1.4681465438310706
+        },
+        {
+          "timestamp": "21:40:24",
+          "reported_pct": 24.1,
+          "reported_votes": 9389,
+          "mae_model": 0.013125003313380096,
+          "mae_naive": 0.013364128885086975,
+          "improvement_pct": 1.7893090807715841
+        },
+        {
+          "timestamp": "21:41:25",
+          "reported_pct": 26.1,
+          "reported_votes": 10173,
+          "mae_model": 0.013184793477611327,
+          "mae_naive": 0.014661909519052387,
+          "improvement_pct": 10.074513415333959
+        },
+        {
+          "timestamp": "21:43:10",
+          "reported_pct": 29.4,
+          "reported_votes": 11485,
+          "mae_model": 0.009753359090896183,
+          "mae_naive": 0.009795347509633226,
+          "improvement_pct": 0.428656754604669
+        },
+        {
+          "timestamp": "21:44:24",
+          "reported_pct": 33.4,
+          "reported_votes": 13047,
+          "mae_model": 0.010840007885020842,
+          "mae_naive": 0.0117142857142857,
+          "improvement_pct": 7.463347322992698
+        },
+        {
+          "timestamp": "21:45:42",
+          "reported_pct": 34.3,
+          "reported_votes": 13374,
+          "mae_model": 0.01117695687202175,
+          "mae_naive": 0.011635063635063642,
+          "improvement_pct": 3.9372948649918222
+        },
+        {
+          "timestamp": "21:51:19",
+          "reported_pct": 37.3,
+          "reported_votes": 14551,
+          "mae_model": 0.012201855358757478,
+          "mae_naive": 0.012857142857142833,
+          "improvement_pct": 5.0966805429972135
+        },
+        {
+          "timestamp": "21:53:08",
+          "reported_pct": 39.9,
+          "reported_votes": 15576,
+          "mae_model": 0.014970415544077104,
+          "mae_naive": 0.01542857142857143,
+          "improvement_pct": 2.969528880981747
+        },
+        {
+          "timestamp": "21:58:00",
+          "reported_pct": 40.0,
+          "reported_votes": 15608,
+          "mae_model": 0.015319053905597176,
+          "mae_naive": 0.01542857142857143,
+          "improvement_pct": 0.7098357970553507
+        },
+        {
+          "timestamp": "22:00:23",
+          "reported_pct": 42.2,
+          "reported_votes": 16472,
+          "mae_model": 0.01620999470765081,
+          "mae_naive": 0.01657142857142857,
+          "improvement_pct": 2.1810664193485456
+        },
+        {
+          "timestamp": "22:01:40",
+          "reported_pct": 44.1,
+          "reported_votes": 17213,
+          "mae_model": 0.01530029643617252,
+          "mae_naive": 0.01557984872270587,
+          "improvement_pct": 1.794319646544025
+        },
+        {
+          "timestamp": "22:03:10",
+          "reported_pct": 49.8,
+          "reported_votes": 19435,
+          "mae_model": 0.019683579747686007,
+          "mae_naive": 0.02041330098472955,
+          "improvement_pct": 3.574734128446064
+        },
+        {
+          "timestamp": "22:04:07",
+          "reported_pct": 51.0,
+          "reported_votes": 19898,
+          "mae_model": 0.019807422363569853,
+          "mae_naive": 0.019714285714285712,
+          "improvement_pct": -0.4724322789775266
+        },
+        {
+          "timestamp": "22:36:49",
+          "reported_pct": 60.9,
+          "reported_votes": 23751,
+          "mae_model": 0.02332733536152291,
+          "mae_naive": 0.025551020408163268,
+          "improvement_pct": 8.702920709694691
+        },
+        {
+          "timestamp": "23:04:28",
+          "reported_pct": 65.5,
+          "reported_votes": 25538,
+          "mae_model": 0.02208707825714033,
+          "mae_naive": 0.02187387387387388,
+          "improvement_pct": -0.9746987867617674
+        },
+        {
+          "timestamp": "23:45:46",
+          "reported_pct": 100.0,
+          "reported_votes": 34208,
+          "mae_model": 0.010780146606095472,
+          "mae_naive": 0.0,
+          "improvement_pct": -10780.14660609547
+        }
+      ]
+    }
+  ],
+  "historical_overlays": {
+    "election": "L\u00f8gtingsval 2022",
+    "n_sites": 57,
+    "distance_summary": {
+      "mean_l1": 0.24645113017535056,
+      "median_l1": 0.21500000000000005,
+      "p90_l1": 0.4394090090090091
+    },
+    "most_distinct_sites": [
+      {
+        "site_id": 5,
+        "site_name": "Hellurnar",
+        "timestamp": "20:22:57",
+        "votes_total": 9,
+        "distance_l1": 0.5118888888888888,
+        "size_bucket": "small"
+      },
+      {
+        "site_id": 4,
+        "site_name": "Hattarv\u00edk",
+        "timestamp": "20:18:47",
+        "votes_total": 8,
+        "distance_l1": 0.4820000000000001,
+        "size_bucket": "small"
+      },
+      {
+        "site_id": 39,
+        "site_name": "Sv\u00ednoy",
+        "timestamp": "20:29:53",
+        "votes_total": 20,
+        "distance_l1": 0.4680000000000001,
+        "size_bucket": "small"
+      },
+      {
+        "site_id": 30,
+        "site_name": "Vi\u00f0arei\u00f0i",
+        "timestamp": "21:40:24",
+        "votes_total": 231,
+        "distance_l1": 0.46674874874874883,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 56,
+        "site_name": "\u00c1rnafj\u00f8r\u00f0ur",
+        "timestamp": "20:20:35",
+        "votes_total": 43,
+        "distance_l1": 0.462,
+        "size_bucket": "medium"
+      },
+      {
+        "site_id": 24,
+        "site_name": "N\u00f3lsoy",
+        "timestamp": "20:55:44",
+        "votes_total": 157,
+        "distance_l1": 0.44752252252252256,
+        "size_bucket": "medium"
+      },
+      {
+        "site_id": 1,
+        "site_name": "Gj\u00f3gv",
+        "timestamp": "20:29:14",
+        "votes_total": 14,
+        "distance_l1": 0.4340000000000001,
+        "size_bucket": "small"
+      },
+      {
+        "site_id": 22,
+        "site_name": "Mikladalur",
+        "timestamp": "20:37:39",
+        "votes_total": 33,
+        "distance_l1": 0.42500000000000004,
+        "size_bucket": "small"
+      },
+      {
+        "site_id": 51,
+        "site_name": "Fossanes",
+        "timestamp": "21:08:13",
+        "votes_total": 300,
+        "distance_l1": 0.41800000000000004,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 55,
+        "site_name": "Dalur",
+        "timestamp": "20:28:25",
+        "votes_total": 28,
+        "distance_l1": 0.4139999999999999,
+        "size_bucket": "small"
+      },
+      {
+        "site_id": 11,
+        "site_name": "H\u00fasav\u00edk",
+        "timestamp": "20:26:50",
+        "votes_total": 52,
+        "distance_l1": 0.40900000000000003,
+        "size_bucket": "medium"
+      },
+      {
+        "site_id": 16,
+        "site_name": "Kirkja",
+        "timestamp": "20:30:31",
+        "votes_total": 21,
+        "distance_l1": 0.3460000000000001,
+        "size_bucket": "small"
+      }
+    ],
+    "closest_sites": [
+      {
+        "site_id": 18,
+        "site_name": "Kollafj\u00f8r\u00f0ur",
+        "timestamp": "22:01:40",
+        "votes_total": 638,
+        "distance_l1": 0.07447052947052947,
+        "size_bucket": "very_large"
+      },
+      {
+        "site_id": 29,
+        "site_name": "Giljanes",
+        "timestamp": "21:44:24",
+        "votes_total": 1382,
+        "distance_l1": 0.09074574574574573,
+        "size_bucket": "very_large"
+      },
+      {
+        "site_id": 57,
+        "site_name": "Argir",
+        "timestamp": "23:04:28",
+        "votes_total": 1571,
+        "distance_l1": 0.10499999999999997,
+        "size_bucket": "very_large"
+      },
+      {
+        "site_id": 50,
+        "site_name": "Fuglafj\u00f8r\u00f0ur",
+        "timestamp": "21:51:19",
+        "votes_total": 1065,
+        "distance_l1": 0.10576076076076078,
+        "size_bucket": "very_large"
+      },
+      {
+        "site_id": 14,
+        "site_name": "Hvalv\u00edk",
+        "timestamp": "21:26:22",
+        "votes_total": 369,
+        "distance_l1": 0.10976476476476478,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 6,
+        "site_name": "Leirv\u00edk",
+        "timestamp": "21:14:32",
+        "votes_total": 621,
+        "distance_l1": 0.11400000000000002,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 54,
+        "site_name": "Ei\u00f0i",
+        "timestamp": "21:36:56",
+        "votes_total": 481,
+        "distance_l1": 0.12048648648648652,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 21,
+        "site_name": "Lopra",
+        "timestamp": "20:40:14",
+        "votes_total": 64,
+        "distance_l1": 0.12299999999999997,
+        "size_bucket": "medium"
+      },
+      {
+        "site_id": 44,
+        "site_name": "Sk\u00e1li",
+        "timestamp": "21:39:30",
+        "votes_total": 470,
+        "distance_l1": 0.12599999999999995,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 20,
+        "site_name": "Kv\u00edv\u00edk",
+        "timestamp": "21:11:07",
+        "votes_total": 344,
+        "distance_l1": 0.12799999999999997,
+        "size_bucket": "large"
+      },
+      {
+        "site_id": 38,
+        "site_name": "S\u00f8rv\u00e1gur",
+        "timestamp": "21:31:07",
+        "votes_total": 738,
+        "distance_l1": 0.13221278721278718,
+        "size_bucket": "very_large"
+      },
+      {
+        "site_id": 7,
+        "site_name": "Hestur",
+        "timestamp": "20:35:09",
+        "votes_total": 15,
+        "distance_l1": 0.13499999999999995,
+        "size_bucket": "small"
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Stylized map of the Faroe Islands</title>
+  <desc id="desc">Original stylized island map for dashboard decoration and regional overlays.</desc>
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d7eef7"/>
+      <stop offset="100%" stop-color="#9bc9df"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0d3e54" flood-opacity="0.22"/>
+    </filter>
+    <style>
+      .island{fill:#f7f4e8;stroke:#1f5670;stroke-width:4;filter:url(#shadow)}
+      .ridge{fill:none;stroke:#9daaa1;stroke-width:2.5;stroke-linecap:round;opacity:.55}
+      .label{font:700 20px 'Space Grotesk',sans-serif;fill:#0f2f40}
+      .dot{fill:#c73b1f;stroke:#fff;stroke-width:2}
+      .pulse{fill:#c73b1f;opacity:.35;animation:pulse 2.8s ease-out infinite}
+      @keyframes pulse{0%{r:6;opacity:.5}100%{r:28;opacity:0}}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="620" fill="url(#sea)"/>
+
+  <!-- Northern group -->
+  <path class="island" d="M310 95 L342 86 L367 96 L379 119 L366 138 L337 147 L314 140 L298 122 Z"/>
+  <path class="ridge" d="M317 122 C333 111,348 108,364 116"/>
+
+  <path class="island" d="M412 112 L444 104 L466 116 L474 137 L461 153 L430 160 L406 150 L396 132 Z"/>
+  <path class="ridge" d="M410 138 C427 130,443 128,460 136"/>
+
+  <!-- Eysturoy -->
+  <path class="island" d="M500 165 L548 150 L585 165 L603 201 L596 242 L563 277 L520 292 L487 274 L468 242 L472 204 Z"/>
+  <path class="ridge" d="M495 235 C522 216,548 212,577 224"/>
+  <path class="ridge" d="M510 255 C531 246,549 246,568 253"/>
+
+  <!-- Streymoy -->
+  <path class="island" d="M385 180 L434 164 L468 177 L484 210 L478 260 L455 305 L418 341 L382 352 L350 337 L332 303 L336 253 L356 214 Z"/>
+  <path class="ridge" d="M360 245 C389 222,422 217,451 229"/>
+  <path class="ridge" d="M369 285 C397 267,422 267,447 278"/>
+
+  <!-- Vágar -->
+  <path class="island" d="M247 244 L285 231 L314 243 L325 267 L315 292 L286 307 L255 301 L239 281 Z"/>
+  <path class="ridge" d="M252 274 C269 261,286 260,304 269"/>
+
+  <!-- Sandoy -->
+  <path class="island" d="M435 375 L474 361 L504 375 L514 404 L504 433 L476 448 L446 442 L428 418 Z"/>
+  <path class="ridge" d="M441 407 C459 395,477 395,495 406"/>
+
+  <!-- Suðuroy -->
+  <path class="island" d="M492 474 L531 460 L560 473 L571 503 L565 543 L539 578 L503 590 L474 575 L459 545 L463 509 Z"/>
+  <path class="ridge" d="M478 525 C502 507,527 505,550 516"/>
+  <path class="ridge" d="M486 552 C507 541,525 540,545 548"/>
+
+  <!-- Town marker (Torshavn area) -->
+  <circle class="pulse" cx="425" cy="302" r="6"/>
+  <circle class="dot" cx="425" cy="302" r="6"/>
+
+  <text class="label" x="38" y="58">Faroe Islands</text>
+  <text class="label" x="40" y="86" style="font-weight:500;font-size:15px;opacity:.75">Election-night monitoring map (stylized)</text>
+</svg>
