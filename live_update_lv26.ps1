@@ -7,6 +7,7 @@ $PROJ = "C:\main_repo\Freedom_prog"
 $PUB  = "C:\main_repo\Freedom_site_public"
 $PY   = "$PROJ\.venv\Scripts\python.exe"
 $DRAWS = "$PROJ\artifacts\b0_weakprior_dim2_20260326_165736\draws"
+$SITE_SRC = "$PROJ\dashboard\site\_site"
 
 function Invoke-Checked {
   param(
@@ -28,7 +29,12 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Project: $PROJ" -ForegroundColor Gray
 Write-Host "Public repo: $PUB" -ForegroundColor Gray
 Write-Host "Posterior draws: $DRAWS" -ForegroundColor Gray
+Write-Host "Website source: $SITE_SRC" -ForegroundColor Gray
 Write-Host ""
+
+if (-not (Get-Command quarto -ErrorAction SilentlyContinue)) {
+  throw "quarto command not found in PATH; install Quarto or add it to PATH"
+}
 
 while ($true) {
   try {
@@ -72,8 +78,21 @@ while ($true) {
       & $PY -m freedom_nowcast.runner.cli phase4 dashboard-data
     }
 
-    # 5) Copy payload to public repo
-    Write-Host "Syncing to public repository..." -ForegroundColor Cyan
+    # 5) Render full website
+    Write-Host "[5/6] Rendering website..." -ForegroundColor Yellow
+    Invoke-Checked -StepName "quarto render" -Command {
+      Set-Location "$PROJ\dashboard\site"
+      quarto render
+    }
+
+    if (-not (Test-Path $SITE_SRC)) {
+      throw "Rendered website directory missing: $SITE_SRC"
+    }
+
+    # 6) Sync website and payload to public repo
+    Write-Host "[6/6] Syncing website to public repository..." -ForegroundColor Cyan
+    Copy-Item "$SITE_SRC\*" "$PUB\" -Recurse -Force
+
     $srcPayload = "$PROJ\docs\dashboard\data\dashboard_payload.json"
     $dstPayload = "$PUB\data\dashboard_payload.json"
 
@@ -92,7 +111,7 @@ while ($true) {
       throw "Payload copy verification failed: source and destination hashes differ"
     }
 
-    # 6) Commit/push payload changes with explicit git error handling
+    # 7) Commit/push website changes with explicit git error handling
     if (-not (Test-Path "$PUB\.git")) {
       throw "Public path is not a git repository: $PUB"
     }
@@ -102,22 +121,22 @@ while ($true) {
       $branch = "main"
     }
 
-    git -C $PUB add -- data/dashboard_payload.json
+    git -C $PUB add -A
     if ($LASTEXITCODE -ne 0) {
-      throw "git add failed for data/dashboard_payload.json"
+      throw "git add failed"
     }
 
-    $staged = git -C $PUB diff --cached --name-only -- data/dashboard_payload.json
+    $staged = git -C $PUB diff --cached --name-only
     if ($LASTEXITCODE -ne 0) {
       throw "git diff --cached failed"
     }
 
     if ([string]::IsNullOrWhiteSpace(($staged | Out-String).Trim())) {
-      Write-Host "✓ No payload change. Skipping commit/push." -ForegroundColor Gray
+      Write-Host "✓ No website/payload change. Skipping commit/push." -ForegroundColor Gray
     }
     else {
       $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-      git -C $PUB commit -m "Live payload update $stamp"
+      git -C $PUB commit -m "Live website update $stamp"
       if ($LASTEXITCODE -ne 0) {
         throw "git commit failed (check git user identity or repository state)"
       }
@@ -136,7 +155,7 @@ while ($true) {
         }
       }
 
-      Write-Host "✓ Pushed live payload update to origin/$branch." -ForegroundColor Green
+      Write-Host "✓ Pushed live website update to origin/$branch." -ForegroundColor Green
     }
 
     Write-Host "=== Update cycle complete: $(Get-Date -Format 'HH:mm:ss') ===" -ForegroundColor Green
