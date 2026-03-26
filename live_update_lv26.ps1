@@ -172,6 +172,6 @@ while ($true) {
     Write-Host "Stack: $($_.ScriptStackTrace)" -ForegroundColor Red
   }
 
-  Write-Host "Sleeping 120 seconds until next refresh..." -ForegroundColor Gray
-  Start-Sleep -Seconds 120
+  Write-Host "Sleeping 200 seconds until next refresh..." -ForegroundColor Gray
+  Start-Sleep -Seconds 200
 }
