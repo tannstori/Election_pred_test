@@ -318,6 +318,44 @@ h3 {
   gap: 0.85rem;
 }
 
+.hero-polls {
+  background: linear-gradient(120deg, #f3fbf6 0%, #deefe8 52%, #d7e7f5 100%);
+}
+
+.panel-highlight {
+  border-color: #b9d7c9;
+  box-shadow: 0 12px 30px rgba(22, 128, 104, 0.12);
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.impact-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 0.7rem;
+}
+
+.impact-title {
+  color: #2f4b60;
+  font-size: 0.86rem;
+  margin-bottom: 0.3rem;
+}
+
+.impact-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.impact-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
 .select-control {
   width: 100%;
   border: 1px solid var(--line);
@@ -361,6 +399,10 @@ h3 {
   }
 
   .controls-row {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-grid {
     grid-template-columns: 1fr;
   }
 

@@ -133,25 +133,14 @@
     if (kpiDiv) kpiDiv.innerHTML = `<div class="kpi">${fmtInt(model.n_divergences)}</div><div class="kpi-sub">Tal eigur at vera 0</div>`;
   };
 
-  window.renderNowcastPage = async function () {
-    let payload;
-    try {
-      payload = await getJson(PAYLOAD_CANDIDATES);
-    } catch (err) {
-      showError("party-grid", err?.message || "Kundi ikki lesa dashboard payload");
-      showError("timeline", err?.message || "Kundi ikki lesa dashboard payload");
-      showError("map", err?.message || "Kundi ikki lesa dashboard payload");
-      return;
-    }
-
-    const demo = payload.demo_nowcast || {};
+  function renderNowcastPanels(demo, ids, summaryText) {
     const parties = safeRows(demo.parties)
       .filter((x) => toNumber(x.vote_share) !== null)
       .sort((a, b) => (toNumber(b.vote_share) || 0) - (toNumber(a.vote_share) || 0));
 
-    const partyGrid = document.getElementById("party-grid");
+    const partyGrid = document.getElementById(ids.partyGridId);
     if (!parties.length) {
-      showEmpty("party-grid", "Eingin flokksmeting er tøk enn.");
+      showEmpty(ids.partyGridId, "Eingin flokksmeting er tøk enn.");
     } else if (partyGrid) {
       partyGrid.innerHTML = parties
         .map((x) => {
@@ -191,9 +180,9 @@
       }))
       .filter((row) => row.reportedPct !== null || row.uncertainty !== null);
 
-    const timeline = document.getElementById("timeline");
+    const timeline = document.getElementById(ids.timelineId);
     if (!timelineRows.length) {
-      showEmpty("timeline", "Eingin framgongd-data er tøk enn.");
+      showEmpty(ids.timelineId, "Eingin framgongd-data er tøk enn.");
     } else if (timelineRows.length === 1 && timeline) {
       const only = timelineRows[0];
       const basisLine = reportedBasis === "reporting_sites"
@@ -228,17 +217,104 @@
         .join("");
     }
 
-    const map = document.getElementById("map");
+    const map = document.getElementById(ids.mapId);
     if (map) {
       const latest = timelineRows[timelineRows.length - 1] || null;
       map.innerHTML = `
         <div class="callout">
-          <p><strong>Samandráttur:</strong> Núverandi síða vísir bert staðfestar kjarnutøl.</p>
+          <p><strong>Samandráttur:</strong> ${esc(summaryText)}</p>
           <p><strong>Seinasta framgongd:</strong> ${latest ? `${fmtPercent(latest.reportedPct, 1)}, óvissa ±${fmtNumber(latest.uncertainty, 1)}` : "Ikki tøk"}</p>
           <p><strong>Viðmerking:</strong> Landakort er tikið burtur av hesi síðu fyri at sleppa undan villleiðandi visualisering.</p>
         </div>
       `;
     }
+  }
+
+  window.renderNowcastPage = async function () {
+    let payload;
+    try {
+      payload = await getJson(PAYLOAD_CANDIDATES);
+    } catch (err) {
+      showError("party-grid", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("timeline", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("map", err?.message || "Kundi ikki lesa dashboard payload");
+      return;
+    }
+
+    const demo = payload.demo_nowcast || {};
+    renderNowcastPanels(
+      demo,
+      { partyGridId: "party-grid", timelineId: "timeline", mapId: "map" },
+      "Núverandi síða vísir bert staðfestar kjarnutøl."
+    );
+  };
+
+  window.renderPollAdjustedNowcastPage = async function () {
+    let payload;
+    try {
+      payload = await getJson(PAYLOAD_CANDIDATES);
+    } catch (err) {
+      showError("poll-impact", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("party-grid-polls", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("timeline-polls", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("map-polls", err?.message || "Kundi ikki lesa dashboard payload");
+      return;
+    }
+
+    const baseline = payload.demo_nowcast || {};
+    const withPolls = payload.demo_nowcast_with_polls || baseline;
+    renderNowcastPanels(
+      withPolls,
+      { partyGridId: "party-grid-polls", timelineId: "timeline-polls", mapId: "map-polls" },
+      "Henda síða vísir metingina, har veljarakanningar eru tiknar við í online dagføringini."
+    );
+
+    const impact = document.getElementById("poll-impact");
+    if (!impact) {
+      return;
+    }
+
+    const baselineParties = safeRows(baseline.parties);
+    const pollParties = safeRows(withPolls.parties);
+    const byId = new Map();
+    baselineParties.forEach((row) => byId.set(String(row.party_id || "").toUpperCase(), row));
+
+    const changed = pollParties
+      .map((row) => {
+        const id = String(row.party_id || "").toUpperCase();
+        const base = byId.get(id) || {};
+        return {
+          id,
+          label: String(row.label || id || "-"),
+          voteShift: (toNumber(row.vote_share) || 0) - (toNumber(base.vote_share) || 0),
+          seatShift: Math.round((toNumber(row.seat_mid) || 0) - (toNumber(base.seat_mid) || 0)),
+        };
+      })
+      .sort((a, b) => Math.abs(b.voteShift) - Math.abs(a.voteShift));
+
+    const top = changed[0] || null;
+    const seatsMoved = changed.reduce((acc, x) => acc + Math.abs(x.seatShift), 0);
+    const voteShiftSum = changed.reduce((acc, x) => acc + Math.abs(x.voteShift), 0);
+
+    impact.innerHTML = `
+      <div class="impact-grid">
+        <article class="impact-card">
+          <div class="impact-title">Størsta broyting</div>
+          <div class="impact-value">${top ? esc(top.label) : "-"}</div>
+          <div class="impact-note">${top ? `${top.voteShift >= 0 ? "+" : ""}${fmtNumber(top.voteShift, 2)} pp` : "Eingin samanbering"}</div>
+        </article>
+        <article class="impact-card">
+          <div class="impact-title">Samlað broyting í sessum</div>
+          <div class="impact-value">${fmtInt(seatsMoved)}</div>
+          <div class="impact-note">Samanlagt skift yvir allar flokkar</div>
+        </article>
+        <article class="impact-card">
+          <div class="impact-title">Samlað broyting í partum</div>
+          <div class="impact-value">${fmtNumber(voteShiftSum, 2)} pp</div>
+          <div class="impact-note">Samanlagt absolutt skift móti no-poll meting</div>
+        </article>
+      </div>
+    `;
   };
 
   window.renderDiagnosticsPage = async function () {

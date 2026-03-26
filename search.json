@@ -14,6 +14,27 @@
     "text": "📋 Live Pipeline Operator Checklist\n    Follow this sequence for tonight's Løgtingval live run\n    \n      \n    \n  \n  \n  \n  \n    🔍 Pre-Launch Verification (Before 20:00)\n    \n      \n      \n        \n        \n          CRITICALConfirm Model State\n          Verify 2D model is active and ready. Check r_hat &lt; 1.02 and ESS &gt; 400.\n          python -m freedom_nowcast.runner.cli phase3 validate-gates\n        \n      \n      \n      \n        \n        \n          CRITICALVerify Live Data Source\n          Confirm KVF lv26 endpoint is responsive and returning ballot data.\n          curl -s https://kvf.fo/lv26 | head -n 50\n        \n      \n      \n      \n        \n        \n          CRITICALCheck Effective Configuration\n          Verify kvf_fv26_url is set to https://kvf.fo/lv26 and stan_offline_model_path points to 2D.\n          python -c \"from freedom_nowcast.config import get_settings; s=get_settings(); print(f'URL: {s.kvf_fv26_url}, Model: {s.stan_offline_model_path}')\"\n        \n      \n      \n      \n        \n        \n          IMPORTANTReview Gate Failures\n          2D has strict gate failures (r_hat 1.01393, coverage 0.514). This is expected. Per ship note: \"GO for controlled 2D with caveat-driven confidence gating.\"\n          View: reports/ship_note_2d_20260326.md\n        \n      \n      \n      \n        \n        \n          OPTIONALPrepare Turnout Overrides\n          If radio announces specific municipality/site turnout, load into config/live_turnout_overrides.csv (columns: scope, name, turnout_votes, turnout_percent). Both municipality and site-level overrides are supported.\n          Edit: config/live_turnout_overrides.csv\n        \n      \n      \n    \n  \n  \n  \n  \n    ⚡ During Election Night (20:00 - Close)\n    \n      \n      \n        \n        \n          EVERY ~5 MINFetch Live Data (Phase 1)\n          Pulls latest ballot snapshot from KVF lv26 endpoint. Updates stream tables only (fast path, ~30 seconds).\n          python -m freedom_nowcast.runner.cli phase1 ingest-live-fast\n        \n      \n      \n      \n        \n        \n          AFTER INGESTRun Model (Phase 4)\n          Executes online particle filter with latest ballot data. Generates predictive nowcast and confidence intervals.\n          python -m freedom_nowcast.runner.cli phase4 run --election-family logtingsval\n        \n      \n      \n      \n        \n        \n          AFTER RUNUpdate Dashboard (Phase 4)\n          Rebuilds JSON payload and HTML pages. Pushes updates to public site.\n          python -m freedom_nowcast.runner.cli phase4 dashboard-data\n        \n      \n      \n      \n        \n        \n          IF NEEDEDApply Turnout Override\n          When radio announces official turnout or specific site data: add row to config/live_turnout_overrides.csv and re-run phase4.\n          Add row + rerun: python -m freedom_nowcast.runner.cli phase4 run --election-family logtingsval\n        \n      \n      \n      \n        \n        \n          MONITORWatch Confidence Intervals\n          As more data comes in, confidence bands should narrow. Check nowcast page for convergence. If margins stay very wide (&gt;5%), monitor model state.\n          Browse: https://[public-site]/nowcast.html\n        \n      \n      \n    \n  \n  \n  \n  \n    🔧 Manual Turnout Override Guide\n    \n      \n      \n        ✓ Supported Override Scopes:\n        • municipality - Apply turnout to entire municipality (e.g., \"Torshavn\", \"Klaksvik\")\n        • site - Apply turnout to specific polling location (e.g., site IDs like \"1001\", \"1002\")\n      \n      \n      \n        ✓ CSV Format (config/live_turnout_overrides.csv):\n        scope,name,turnout_votes,turnout_percent\n        • Fill turnout_votes if you have absolute count\n        • Fill turnout_percent if you have percentage only\n        • Leave blank if not known (system infers from available data)\n      \n      \n      \n        Example Entries:\n        municipality,Klaksvik,2887, (Klaksvik: 2,887 votes, % inferred)\n        municipality,Runavik,,77.2 (Runavik: 77.2% turnout, votes inferred)\n        site,1045,,68.5 (Site 1045: 68.5% turnout)\n      \n      \n    \n  \n  \n  \n  \n    📊 Post-Night Wrap-up\n    \n      \n      \n        \n        \n          Archive Final Nowcast\n          Save final HTML snapshots and payload for post-mortems.\n          cp docs/dashboard/data/dashboard_payload.json reports/final_payload_lv26.json\n        \n      \n      \n      \n        \n        \n          Review Model Diagnostics\n          Check for divergences or pathologies in final night run.\n          View: reports/model_convergence_report.json\n        \n      \n      \n      \n        \n        \n          Commit and Document\n          Record turnout overrides and final state for next cycle.\n          git add config/live_turnout_overrides.csv && git commit -m \"Final LV26 turnout overrides $(date +%Y%m%d)\"\n        \n      \n      \n    \n  \n  \n  \n  \n    🧠 Model Status Summary\n    \n      \n      \n        \n        \n          Model: 2D Latent Structure\n          File: stan/offline_nowcast_2d.stan\n          Status: ✓ Operational\n          Frozen: artifacts/ship_2d_20260326_194752\n        \n        \n        \n          Live Source: https://kvf.fo/lv26\n          Pipeline: phase1 → phase4 cadence\n          Polls Policy: Diagnostics-only\n          Readiness: GO (with caveats)\n        \n        \n      \n      \n      \n        ⚠️  Operational Caveat: National electorate undercoverage exists. \n        Confidence must be gated on high-impact-site inclusion and weighted completeness, not site count alone. \n        Monitor confidence intervals throughout the night.\n      \n      \n    \n  \n  \n  \n    Generated: 2026-03-26 | Model: 2D | Source: lv26 | Confidence: Caveat-Driven | \n    Ship Note"
   },
   {
+    "objectID": "nowcast.html",
+    "href": "nowcast.html",
+    "title": "Núverandi meting",
+    "section": "",
+    "text": "Núverandi meting\n\n\nHøvuðsmynd av floksum, sessum og seinastu framgongd í uppteljing.\n\n\n\n\n\nFlokkar: partur og sessir\n\n\nLoading…\n\n\n\n\nFramgongd í uppteljing\n\n\nLoading…\n\n\n\n\n\nStutt støðumeting\n\n\nLoading…"
+  },
+  {
+    "objectID": "diagnostics.html",
+    "href": "diagnostics.html",
+    "title": "Diagnostikkur",
+    "section": "",
+    "text": "Diagnostikkur\n\n\nGreið støða á gate-checkum og modelheilsu.\n\n\n\n\n\nGate-støða\n\n\nLoading…\n\n\n\n\nModel støða\n\n\nLoading…\n\n\n\n\n\nPPC eftir flokki\n\n\nLoading…"
+  },
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "Dátugrunnur",
+    "section": "",
+    "text": "Dátugrunnur\n\n\nKontroll av grundardátu, mapping og tilbúgving til livandi koyring.\n\n\n\n\n\n\nDátu-yvirlit\n\n\nLoading…\n\n\n\n\n\nTalvur og raðir\n\n\nLoading…\n\n\n\n\nKonsistens-fløgg\n\n\nLoading…\n\n\n\n\n\nLokalitetur til kommuna (samandráttur)\n\n\nLoading…\n\n\n\n\nKommunu-kort við overlays\n\n\n\nOverlay  Fólkatal eftir kommunu Tal av lokalitetum eftir kommunu Søga: mest avvikandi støð (LV2022) Søga: mest lík landsúrslit (LV2022) \n\n\nTíðspunkt (søga) \n\n\n\n\n\n\n\n\nIB01031 lokalitetir (leita)\n\n\n\nLoading…"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Yvirlit",
@@ -35,25 +56,11 @@
     "text": "Síðurnar tú skalt brúka\n\n\n\nNúverandi meting\n\n\nFlokkar, sessir og framgongd í uppteljing beint nú.\n\n \n\nDiagnostikkur\n\n\nGate-støða, konvergens og ppc-viðurskifti.\n\n \n\nDátugrunnur\n\n\nTalvur, konsistensfløgg og mapping-yvirlit.\n\n \n\nEndurspæl\n\n\nSamanbering við søgulig valkvøld.\n\n \n\nVeljarakanningar\n\n\nSeinastu kanningar, skiftað eftir valfamilju og flokki."
   },
   {
-    "objectID": "data.html",
-    "href": "data.html",
-    "title": "Dátugrunnur",
+    "objectID": "nowcast_polls.html",
+    "href": "nowcast_polls.html",
+    "title": "Meting við veljarakanningum",
     "section": "",
-    "text": "Dátugrunnur\n\n\nKontroll av grundardátu, mapping og tilbúgving til livandi koyring.\n\n\n\n\n\n\nDátu-yvirlit\n\n\nLoading…\n\n\n\n\n\nTalvur og raðir\n\n\nLoading…\n\n\n\n\nKonsistens-fløgg\n\n\nLoading…\n\n\n\n\n\nLokalitetur til kommuna (samandráttur)\n\n\nLoading…\n\n\n\n\nKommunu-kort við overlays\n\n\n\nOverlay  Fólkatal eftir kommunu Tal av lokalitetum eftir kommunu Søga: mest avvikandi støð (LV2022) Søga: mest lík landsúrslit (LV2022) \n\n\nTíðspunkt (søga) \n\n\n\n\n\n\n\n\nIB01031 lokalitetir (leita)\n\n\n\nLoading…"
-  },
-  {
-    "objectID": "diagnostics.html",
-    "href": "diagnostics.html",
-    "title": "Diagnostikkur",
-    "section": "",
-    "text": "Diagnostikkur\n\n\nGreið støða á gate-checkum og modelheilsu.\n\n\n\n\n\nGate-støða\n\n\nLoading…\n\n\n\n\nModel støða\n\n\nLoading…\n\n\n\n\n\nPPC eftir flokki\n\n\nLoading…"
-  },
-  {
-    "objectID": "nowcast.html",
-    "href": "nowcast.html",
-    "title": "Núverandi meting",
-    "section": "",
-    "text": "Núverandi meting\n\n\nHøvuðsmynd av floksum, sessum og seinastu framgongd í uppteljing.\n\n\n\n\n\nFlokkar: partur og sessir\n\n\nLoading…\n\n\n\n\nFramgongd í uppteljing\n\n\nLoading…\n\n\n\n\n\nStutt støðumeting\n\n\nLoading…"
+    "text": "Meting við veljarakanningum\n\n\nHenda síðan vísir live nowcast, har veljarakanningar verða tiknar við sum eyka signal.\n\n\n\n\nÁvirkan av veljarakanningum\n\n\nLoading…\n\n\n\n\n\nFlokkar: partur og sessir (við kanningum)\n\n\nLoading…\n\n\n\n\nFramgongd í uppteljing\n\n\nLoading…\n\n\n\n\n\nStutt støðumeting\n\n\nLoading…"
   },
   {
     "objectID": "polls.html",
