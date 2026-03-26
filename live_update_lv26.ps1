@@ -6,12 +6,14 @@ $ErrorActionPreference = "Stop"
 $PROJ = "C:\main_repo\Freedom_prog"
 $PUB  = "C:\main_repo\Freedom_site_public"
 $PY   = "$PROJ\.venv\Scripts\python.exe"
+$DRAWS = "$PROJ\artifacts\b0_weakprior_dim2_20260326_165736\draws"
 
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Løgtingsval 2026 Live Nowcast Engine" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Project: $PROJ" -ForegroundColor Gray
 Write-Host "Public repo: $PUB" -ForegroundColor Gray
+Write-Host "Posterior draws: $DRAWS" -ForegroundColor Gray
 Write-Host ""
 
 while ($true) {
@@ -31,6 +33,7 @@ while ($true) {
     Write-Host "[2/3] Running nowcast model (logtingsval)..." -ForegroundColor Yellow
     & $PY -m freedom_nowcast.runner.cli phase4 run `
       --election-family logtingsval `
+      --posterior-draws-dir "$DRAWS" `
       --turnout-overrides-file "$PROJ\config\live_turnout_overrides.csv" `
       --no-use-polls
 
@@ -96,6 +99,6 @@ while ($true) {
     Write-Host "Stack: $($_.ScriptStackTrace)" -ForegroundColor Red
   }
 
-  Write-Host "Sleeping 300 seconds until next refresh..." -ForegroundColor Gray
-  Start-Sleep -Seconds 300
+  Write-Host "Sleeping 120 seconds until next refresh..." -ForegroundColor Gray
+  Start-Sleep -Seconds 120
 }
