@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-26T21:00:08.731835+00:00",
+  "generated_at_utc": "2026-03-26T21:02:20.651326+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -148,9 +148,9 @@
     ],
     "timeline": [
       {
-        "t": "21:00",
-        "reported_pct": 73.32006850695144,
-        "uncertainty": 2.0198095187678766
+        "t": "21:02",
+        "reported_pct": 73.29236348982471,
+        "uncertainty": 2.019810169381478
       }
     ]
   },

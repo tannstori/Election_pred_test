@@ -42,16 +42,51 @@ while ($true) {
     Write-Host "Syncing to public repository..." -ForegroundColor Cyan
     Copy-Item "$PROJ\docs\dashboard\data\dashboard_payload.json" "$PUB\data\dashboard_payload.json" -Force
 
-    # 5) Push only if changed
-    Set-Location $PUB
-    git add data/dashboard_payload.json
-    git diff --cached --quiet
-    if ($LASTEXITCODE -eq 0) {
+    # 5) Commit/push payload changes with explicit git error handling
+    if (-not (Test-Path "$PUB\.git")) {
+      throw "Public path is not a git repository: $PUB"
+    }
+
+    $branch = (git -C $PUB branch --show-current).Trim()
+    if ([string]::IsNullOrWhiteSpace($branch)) {
+      $branch = "main"
+    }
+
+    git -C $PUB add -- data/dashboard_payload.json
+    if ($LASTEXITCODE -ne 0) {
+      throw "git add failed for data/dashboard_payload.json"
+    }
+
+    $staged = git -C $PUB diff --cached --name-only -- data/dashboard_payload.json
+    if ($LASTEXITCODE -ne 0) {
+      throw "git diff --cached failed"
+    }
+
+    if ([string]::IsNullOrWhiteSpace(($staged | Out-String).Trim())) {
       Write-Host "✓ No payload change. Skipping commit/push." -ForegroundColor Gray
-    } else {
-      git commit -m "Live payload update $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-      git push origin main
-      Write-Host "✓ Pushed live payload update." -ForegroundColor Green
+    }
+    else {
+      $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+      git -C $PUB commit -m "Live payload update $stamp"
+      if ($LASTEXITCODE -ne 0) {
+        throw "git commit failed (check git user identity or repository state)"
+      }
+
+      git -C $PUB push origin $branch
+      if ($LASTEXITCODE -ne 0) {
+        Write-Host "Push rejected; attempting rebase+retry..." -ForegroundColor Yellow
+        git -C $PUB pull --rebase --autostash origin $branch
+        if ($LASTEXITCODE -ne 0) {
+          throw "git pull --rebase --autostash failed (resolve conflicts, then restart loop)"
+        }
+
+        git -C $PUB push origin $branch
+        if ($LASTEXITCODE -ne 0) {
+          throw "git push failed after rebase (check auth/permissions/network)"
+        }
+      }
+
+      Write-Host "✓ Pushed live payload update to origin/$branch." -ForegroundColor Green
     }
 
     Write-Host "=== Update cycle complete: $(Get-Date -Format 'HH:mm:ss') ===" -ForegroundColor Green
