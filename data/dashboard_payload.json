@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-26T22:23:23.543727+00:00",
+  "generated_at_utc": "2026-03-26T22:27:12.637045+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -85,7 +85,7 @@
       {
         "party_id": "A",
         "label": "F\u00f3lkaflokkurin",
-        "vote_share": 26.02166102308269,
+        "vote_share": 26.02109399234826,
         "delta": 0.0,
         "seat_mid": 9,
         "seat_lo": 8,
@@ -94,16 +94,16 @@
       {
         "party_id": "B",
         "label": "Sambandsflokkurin",
-        "vote_share": 22.9075117613607,
+        "vote_share": 22.619170716575326,
         "delta": 0.0,
-        "seat_mid": 8,
+        "seat_mid": 7,
         "seat_lo": 7,
         "seat_hi": 8
       },
       {
         "party_id": "C",
         "label": "Javna\u00f0arflokkurin",
-        "vote_share": 19.865067466266865,
+        "vote_share": 19.832488884293248,
         "delta": 0.0,
         "seat_mid": 6,
         "seat_lo": 6,
@@ -112,7 +112,7 @@
       {
         "party_id": "E",
         "label": "Tj\u00f3\u00f0veldi",
-        "vote_share": 17.58304252294171,
+        "vote_share": 17.68279413914638,
         "delta": 0.0,
         "seat_mid": 6,
         "seat_lo": 5,
@@ -121,7 +121,7 @@
       {
         "party_id": "H",
         "label": "Mi\u00f0flokkurin",
-        "vote_share": 6.048699788037016,
+        "vote_share": 6.046349347453944,
         "delta": 0.0,
         "seat_mid": 2,
         "seat_lo": 2,
@@ -130,16 +130,16 @@
       {
         "party_id": "D",
         "label": "Sj\u00e1lvst\u00fdri",
-        "vote_share": 4.621946490887941,
+        "vote_share": 4.738331757179033,
         "delta": 0.0,
-        "seat_mid": 1,
+        "seat_mid": 2,
         "seat_lo": 1,
         "seat_hi": 2
       },
       {
         "party_id": "F",
         "label": "Frams\u00f3kn",
-        "vote_share": 3.278921638293715,
+        "vote_share": 3.2855111800439447,
         "delta": 0.0,
         "seat_mid": 1,
         "seat_lo": 0,
@@ -148,18 +148,18 @@
     ],
     "timeline": [
       {
-        "t": "22:23",
-        "reported_pct": 92.98245614035088,
-        "uncertainty": 1.3817528675840896
+        "t": "22:27",
+        "reported_pct": 94.73684210526316,
+        "uncertainty": 1.3622117704658736
       }
     ],
     "summary": {
       "election_family": "logtingsval",
       "eligible_site_count": 57,
       "eligible_total_votes": 39704,
-      "generated_at_utc": "2026-03-26 22:23:22.137791+00:00",
+      "generated_at_utc": "2026-03-26 22:27:10.877237+00:00",
       "observation_source": "local_stream_site_party_partial",
-      "observation_total_votes": 19621,
+      "observation_total_votes": 19647,
       "party_codes": [
         "A",
         "B",
@@ -171,7 +171,7 @@
       ],
       "posterior_source": "trained_draws:C:\\main_repo\\Freedom_prog\\artifacts\\b0_weakprior_dim2_20260326_165736\\draws:e5:p10",
       "reported_pct_basis": "reporting_sites",
-      "reporting_sites": 53,
+      "reporting_sites": 54,
       "training_election_ids": [
         "28",
         "2",
@@ -179,7 +179,7 @@
         "90",
         "340"
       ],
-      "turnout_observed_total_votes": 19621
+      "turnout_observed_total_votes": 19647
     }
   },
   "demo_nowcast_with_polls": {
@@ -187,7 +187,7 @@
       {
         "party_id": "A",
         "label": "F\u00f3lkaflokkurin",
-        "vote_share": 26.02838896501797,
+        "vote_share": 26.02916839056682,
         "delta": 0.0,
         "seat_mid": 9,
         "seat_lo": 8,
@@ -196,7 +196,7 @@
       {
         "party_id": "B",
         "label": "Sambandsflokkurin",
-        "vote_share": 22.41325818294638,
+        "vote_share": 22.412990639706262,
         "delta": 0.0,
         "seat_mid": 7,
         "seat_lo": 7,
@@ -205,7 +205,7 @@
       {
         "party_id": "C",
         "label": "Javna\u00f0arflokkurin",
-        "vote_share": 20.057395485922594,
+        "vote_share": 20.057921547332764,
         "delta": 0.0,
         "seat_mid": 7,
         "seat_lo": 6,
@@ -214,7 +214,7 @@
       {
         "party_id": "E",
         "label": "Tj\u00f3\u00f0veldi",
-        "vote_share": 17.581053829050106,
+        "vote_share": 17.582872213890468,
         "delta": 0.0,
         "seat_mid": 6,
         "seat_lo": 5,
@@ -223,7 +223,7 @@
       {
         "party_id": "H",
         "label": "Mi\u00f0flokkurin",
-        "vote_share": 6.049950876467243,
+        "vote_share": 6.042975719494221,
         "delta": 0.0,
         "seat_mid": 2,
         "seat_lo": 2,
@@ -232,7 +232,7 @@
       {
         "party_id": "D",
         "label": "Sj\u00e1lvst\u00fdri",
-        "vote_share": 4.622782977403175,
+        "vote_share": 4.623261105652376,
         "delta": 0.0,
         "seat_mid": 1,
         "seat_lo": 1,
@@ -241,7 +241,7 @@
       {
         "party_id": "F",
         "label": "Frams\u00f3kn",
-        "vote_share": 3.2834354559321595,
+        "vote_share": 3.273686388084402,
         "delta": 0.0,
         "seat_mid": 1,
         "seat_lo": 0,
@@ -250,18 +250,18 @@
     ],
     "timeline": [
       {
-        "t": "22:23",
-        "reported_pct": 92.98245614035088,
-        "uncertainty": 1.3516472046114627
+        "t": "22:27",
+        "reported_pct": 94.73684210526316,
+        "uncertainty": 1.3551992434377114
       }
     ],
     "summary": {
       "election_family": "logtingsval",
       "eligible_site_count": 57,
       "eligible_total_votes": 39704,
-      "generated_at_utc": "2026-03-26 22:23:19.386511+00:00",
+      "generated_at_utc": "2026-03-26 22:27:07.632615+00:00",
       "observation_source": "local_stream_site_party_partial+polls_csv:data\\polls\\polls_manual_entry.csv",
-      "observation_total_votes": 20084,
+      "observation_total_votes": 20110,
       "party_codes": [
         "A",
         "B",
@@ -273,7 +273,7 @@
       ],
       "posterior_source": "trained_draws:C:\\main_repo\\Freedom_prog\\artifacts\\b0_weakprior_dim2_20260326_165736\\draws:e5:p10",
       "reported_pct_basis": "reporting_sites",
-      "reporting_sites": 53,
+      "reporting_sites": 54,
       "training_election_ids": [
         "28",
         "2",
@@ -281,7 +281,7 @@
         "90",
         "340"
       ],
-      "turnout_observed_total_votes": 19621
+      "turnout_observed_total_votes": 19647
     }
   },
   "data_audit": {
