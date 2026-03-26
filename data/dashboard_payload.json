@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-26T21:02:20.651326+00:00",
+  "generated_at_utc": "2026-03-26T21:07:54.023886+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -148,11 +148,39 @@
     ],
     "timeline": [
       {
-        "t": "21:02",
-        "reported_pct": 73.29236348982471,
-        "uncertainty": 2.019810169381478
+        "t": "21:07",
+        "reported_pct": 100.0,
+        "uncertainty": 2.0198095187678766
       }
-    ]
+    ],
+    "summary": {
+      "election_family": "logtingsval",
+      "eligible_site_count": 57,
+      "eligible_total_votes": 39704,
+      "generated_at_utc": "2026-03-26 21:07:52.702284+00:00",
+      "observation_source": "local_stream_site_party_partial",
+      "observation_total_votes": 29111,
+      "party_codes": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "H"
+      ],
+      "posterior_source": "trained_draws:c:\\main_repo\\Freedom_prog\\artifacts\\b0_weakprior_dim2_20260326_165736\\draws:e5:p10",
+      "reported_pct_basis": "reporting_sites",
+      "reporting_sites": 57,
+      "training_election_ids": [
+        "28",
+        "2",
+        "1",
+        "90",
+        "340"
+      ],
+      "turnout_observed_total_votes": 29111
+    }
   },
   "data_audit": {
     "consistency": {

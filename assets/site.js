@@ -176,6 +176,13 @@
         .join("");
     }
 
+    const nowcastSummary = demo.summary || {};
+    const reportedBasis = String(nowcastSummary.reported_pct_basis || "");
+    const reportingSites = toNumber(nowcastSummary.reporting_sites);
+    const eligibleSiteCount = toNumber(nowcastSummary.eligible_site_count);
+    const observedVotes = toNumber(nowcastSummary.turnout_observed_total_votes ?? nowcastSummary.observation_total_votes);
+    const eligibleVotes = toNumber(nowcastSummary.eligible_total_votes);
+
     const timelineRows = safeRows(demo.timeline)
       .map((row) => ({
         t: String(row.t || "-"),
@@ -189,10 +196,14 @@
       showEmpty("timeline", "Eingin framgongd-data er tøk enn.");
     } else if (timelineRows.length === 1 && timeline) {
       const only = timelineRows[0];
+      const basisLine = reportedBasis === "reporting_sites"
+        ? `<p><strong>Frágreiðandi valstaðir:</strong> ${fmtInt(reportingSites)} av ${fmtInt(eligibleSiteCount)}</p>`
+        : `<p><strong>Talda atkvøður / skrásettir veljarar:</strong> ${fmtInt(observedVotes)} / ${fmtInt(eligibleVotes)}</p>`;
       timeline.innerHTML = `
         <div class="callout">
           <p><strong>Tid:</strong> ${esc(only.t)}</p>
-          <p><strong>Uppgjort:</strong> ${fmtPercent(only.reportedPct, 1)}</p>
+          <p><strong>Framgongd í uppteljing:</strong> ${fmtPercent(only.reportedPct, 1)}</p>
+          ${basisLine}
           <p><strong>Ovissa:</strong> ±${fmtNumber(only.uncertainty, 1)}</p>
         </div>
       `;
@@ -223,7 +234,7 @@
       map.innerHTML = `
         <div class="callout">
           <p><strong>Samandráttur:</strong> Núverandi síða vísir bert staðfestar kjarnutøl.</p>
-          <p><strong>Seinasta framgongd:</strong> ${latest ? `${fmtPercent(latest.reportedPct, 1)} uppgjørt, óvissa ±${fmtNumber(latest.uncertainty, 1)}` : "Ikki tøk"}</p>
+          <p><strong>Seinasta framgongd:</strong> ${latest ? `${fmtPercent(latest.reportedPct, 1)}, óvissa ±${fmtNumber(latest.uncertainty, 1)}` : "Ikki tøk"}</p>
           <p><strong>Viðmerking:</strong> Landakort er tikið burtur av hesi síðu fyri at sleppa undan villleiðandi visualisering.</p>
         </div>
       `;
