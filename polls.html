@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Diagnostikkur – Faroeskt Valnáttarmeting</title>
+<title>Seinastu veljarakanningar – Faroeskt Valnáttarmeting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Núverandi meting</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./diagnostics.html" aria-current="page"> 
+    <a class="nav-link" href="./diagnostics.html"> 
 <span class="menu-text">Diagnostikkur</span></a>
   </li>  
   <li class="nav-item">
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Endurspæl</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./polls.html"> 
+    <a class="nav-link active" href="./polls.html" aria-current="page"> 
 <span class="menu-text">Seinastu veljarakanningar</span></a>
   </li>  
 </ul>
@@ -133,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Diagnostikkur</h1>
+<h1 class="title">Seinastu veljarakanningar</h1>
 </div>
 
 
@@ -150,35 +150,35 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="grid-2">
 <section class="panel">
 <h2 class="anchored">
-Gate-støða
+Yvirlit
 </h2>
-<div id="gate-table">
+<div id="polls-summary">
 Loading…
 </div>
 </section>
+<div class="controls-row">
+<div>
+<pre><code>&lt;label for="poll-family"&gt;&lt;strong&gt;Valfamilja&lt;/strong&gt;&lt;/label&gt;
+&lt;select id="poll-family" class="select-control"&gt;&lt;/select&gt;</code></pre>
+</div>
+<div>
+<pre><code>&lt;label for="poll-party"&gt;&lt;strong&gt;Flokkur&lt;/strong&gt;&lt;/label&gt;
+&lt;select id="poll-party" class="select-control"&gt;&lt;/select&gt;</code></pre>
+</div>
+</div>
 <section class="panel">
 <h2 class="anchored">
-Model støða
+Poll-røðir (seinastu 4 ár)
 </h2>
-<div id="model-summary">
-Loading…
-</div>
-</section>
-</div>
-<section class="panel">
-<h2 class="anchored">
-PPC eftir flokki
-</h2>
-<div id="ppc-bars">
+<div id="polls-table" class="table-wrap">
 Loading…
 </div>
 </section>
 <script src="assets/site.js"></script>
 <script>
-window.renderDiagnosticsPage();
+window.renderPollsPage();
 </script>
 
 

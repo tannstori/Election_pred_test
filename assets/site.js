@@ -597,4 +597,81 @@
     electionSelect.onchange = renderElection;
     renderElection();
   };
+
+  window.renderPollsPage = async function () {
+    let p;
+    try {
+      p = await getJson(PAYLOAD_CANDIDATES);
+    } catch (err) {
+      showError('polls-summary', err?.message || 'Kundi ikki lesa dashboard payload');
+      showError('polls-table', err?.message || 'Kundi ikki lesa dashboard payload');
+      return;
+    }
+
+    const block = p.latest_polls || {};
+    const rows = Array.isArray(block.rows) ? block.rows : [];
+    const familySelect = document.getElementById('poll-family');
+    const partySelect = document.getElementById('poll-party');
+    const summaryNode = document.getElementById('polls-summary');
+    const tableNode = document.getElementById('polls-table');
+
+    if (!rows.length) {
+      summaryNode.innerHTML = '<p>Ongar veljarakanningar funnar seinastu 4 árini.</p>';
+      tableNode.innerHTML = '';
+      return;
+    }
+
+    const families = [...new Set(rows.map((r) => String(r.election_family || 'unknown')))].sort();
+    const parties = [...new Set(rows.map((r) => String(r.party_id || '').toUpperCase()).filter(Boolean))].sort();
+
+    familySelect.innerHTML = ['all', ...families]
+      .map((v) => `<option value="${esc(v)}">${v === 'all' ? 'Allar' : esc(v)}</option>`)
+      .join('');
+    partySelect.innerHTML = ['all', ...parties]
+      .map((v) => `<option value="${esc(v)}">${v === 'all' ? 'Allir' : esc(v)}</option>`)
+      .join('');
+
+    function renderTable() {
+      const fam = familySelect.value || 'all';
+      const party = partySelect.value || 'all';
+      const filtered = rows.filter((r) => {
+        const famOk = fam === 'all' || String(r.election_family || '') === fam;
+        const partyOk = party === 'all' || String(r.party_id || '').toUpperCase() === party;
+        return famOk && partyOk;
+      });
+
+      const pollIds = new Set(filtered.map((r) => String(r.poll_id || '')));
+      const latestDate = filtered.length ? filtered[0].poll_date : '-';
+      const earliestDate = filtered.length ? filtered[filtered.length - 1].poll_date : '-';
+      summaryNode.innerHTML = `
+        <p><strong>Røðir:</strong> ${filtered.length}</p>
+        <p><strong>Einstakar kanningar:</strong> ${pollIds.size}</p>
+        <p><strong>Tíðarskeið:</strong> ${esc(earliestDate)} → ${esc(latestDate)}</p>
+        <p><strong>Keldur:</strong> ${esc((block.sources || []).join(', ') || '-')}</p>
+      `;
+
+      tableNode.innerHTML = `
+        <table class="status-table polls-table">
+          <thead><tr><th>Dagur</th><th>Valfamilja</th><th>Poll ID</th><th>Flokkur</th><th>Partur %</th><th>Úrtak</th><th>Stovnur</th></tr></thead>
+          <tbody>
+            ${filtered.slice(0, 400).map((r) => `
+              <tr>
+                <td>${esc(r.poll_date)}</td>
+                <td>${esc(r.election_family || '-')}</td>
+                <td>${esc(r.poll_id || '-')}</td>
+                <td>${esc(r.party_id || '-')}</td>
+                <td>${num(r.vote_share_percent, 1)}</td>
+                <td>${esc(r.sample_size ?? '-')}</td>
+                <td>${esc(r.polling_firm || '-')}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    familySelect.addEventListener('change', renderTable);
+    partySelect.addEventListener('change', renderTable);
+    renderTable();
+  };
 })();

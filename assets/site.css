@@ -110,6 +110,11 @@ body {
   overflow: auto;
 }
 
+.polls-table td,
+.polls-table th {
+  white-space: nowrap;
+}
+
 .selected-row {
   background: #eef5ff;
 }
