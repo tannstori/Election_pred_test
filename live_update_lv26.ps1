@@ -92,6 +92,7 @@ while ($true) {
     # 6) Sync website and payload to public repo
     Write-Host "[6/6] Syncing website to public repository..." -ForegroundColor Cyan
     Copy-Item "$SITE_SRC\*" "$PUB\" -Recurse -Force
+    Copy-Item "$PROJ\live_update_lv26.ps1" "$PUB\live_update_lv26.ps1" -Force
 
     $srcPayload = "$PROJ\docs\dashboard\data\dashboard_payload.json"
     $dstPayload = "$PUB\data\dashboard_payload.json"
@@ -131,7 +132,13 @@ while ($true) {
       throw "git diff --cached failed"
     }
 
-    if ([string]::IsNullOrWhiteSpace(($staged | Out-String).Trim())) {
+    $stagedText = ($staged | Out-String).Trim()
+    if (-not [string]::IsNullOrWhiteSpace($stagedText)) {
+      Write-Host "Staged files:" -ForegroundColor DarkGray
+      Write-Host $stagedText -ForegroundColor DarkGray
+    }
+
+    if ([string]::IsNullOrWhiteSpace($stagedText)) {
       Write-Host "✓ No website/payload change. Skipping commit/push." -ForegroundColor Gray
     }
     else {
