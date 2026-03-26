@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-26T20:42:42.674449+00:00",
+  "generated_at_utc": "2026-03-26T21:00:08.731835+00:00",
   "phase_status": {
     "phase1": {
       "present": true,
@@ -83,63 +83,63 @@
   "demo_nowcast": {
     "parties": [
       {
-        "party_id": "A",
-        "label": "F\u00f3lkaflokkurin",
-        "vote_share": 45.29283704136356,
+        "party_id": "C",
+        "label": "Javna\u00f0arflokkurin",
+        "vote_share": 40.22893251152432,
         "delta": 0.0,
-        "seat_mid": 16,
-        "seat_lo": 16,
-        "seat_hi": 16
+        "seat_mid": 14,
+        "seat_lo": 13,
+        "seat_hi": 15
       },
       {
         "party_id": "B",
         "label": "Sambandsflokkurin",
-        "vote_share": 18.950777889874157,
+        "vote_share": 23.94789319659182,
         "delta": 0.0,
-        "seat_mid": 7,
+        "seat_mid": 8,
         "seat_lo": 7,
-        "seat_hi": 7
+        "seat_hi": 10
       },
       {
-        "party_id": "C",
-        "label": "Javna\u00f0arflokkurin",
-        "vote_share": 17.787925450007965,
+        "party_id": "A",
+        "label": "F\u00f3lkaflokkurin",
+        "vote_share": 15.486611073703838,
         "delta": 0.0,
-        "seat_mid": 6,
-        "seat_lo": 6,
-        "seat_hi": 6
+        "seat_mid": 5,
+        "seat_lo": 4,
+        "seat_hi": 7
       },
       {
         "party_id": "E",
         "label": "Tj\u00f3\u00f0veldi",
-        "vote_share": 12.087824563266606,
+        "vote_share": 14.678613974206247,
         "delta": 0.0,
-        "seat_mid": 4,
+        "seat_mid": 5,
         "seat_lo": 4,
-        "seat_hi": 4
-      },
-      {
-        "party_id": "F",
-        "label": "Frams\u00f3kn",
-        "vote_share": 2.936335156374449,
-        "delta": 0.0,
-        "seat_mid": 0,
-        "seat_lo": 0,
-        "seat_hi": 0
+        "seat_hi": 6
       },
       {
         "party_id": "D",
         "label": "Sj\u00e1lvst\u00fdri",
-        "vote_share": 2.134551054000956,
+        "vote_share": 1.8826880745824162,
+        "delta": 0.0,
+        "seat_mid": 0,
+        "seat_lo": 0,
+        "seat_hi": 1
+      },
+      {
+        "party_id": "H",
+        "label": "Mi\u00f0flokkurin",
+        "vote_share": 1.706634899259336,
         "delta": 0.0,
         "seat_mid": 0,
         "seat_lo": 0,
         "seat_hi": 0
       },
       {
-        "party_id": "H",
-        "label": "Mi\u00f0flokkurin",
-        "vote_share": 0.8097488451123028,
+        "party_id": "F",
+        "label": "Frams\u00f3kn",
+        "vote_share": 0.804101834643155,
         "delta": 0.0,
         "seat_mid": 0,
         "seat_lo": 0,
@@ -148,9 +148,9 @@
     ],
     "timeline": [
       {
-        "t": "20:42",
+        "t": "21:00",
         "reported_pct": 73.32006850695144,
-        "uncertainty": 0.1
+        "uncertainty": 2.0198095187678766
       }
     ]
   },
