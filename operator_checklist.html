@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Núverandi meting – Faroeskt Valnáttarmeting</title>
+<title>📋 Operator Checklist - Live Pipeline – Faroeskt Valnáttarmeting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./nowcast.html" aria-current="page"> 
+    <a class="nav-link" href="./nowcast.html"> 
 <span class="menu-text">Núverandi meting</span></a>
   </li>  
   <li class="nav-item">
@@ -121,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Núverandi meting</h1>
+<h1 class="title">📋 Operator Checklist - Live Pipeline</h1>
 </div>
 
 
@@ -138,43 +138,436 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="hero hero-compact">
-<h1>
-Núverandi meting
-</h1>
-<p>
-Høvuðsmynd av floksum, sessum og seinastu framgongd í uppteljing.
-</p>
+<style>
+  .checklist-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 900px;
+    margin: 2rem auto;
+    line-height: 1.6;
+  }
+  
+  .checklist-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 0;
+  }
+  
+  .checklist-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  
+  .checklist-header p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.95;
+    font-size: 0.95rem;
+  }
+  
+  .checklist-section {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  
+  .section-title {
+    background: #f5f5f5;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .section-content {
+    padding: 1.5rem;
+  }
+  
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding: 0.75rem 1rem;
+    background: #fafafa;
+    border-left: 4px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  
+  .checklist-item:hover {
+    background: #f0f0f0;
+    border-left-color: #667eea;
+  }
+  
+  .checklist-item.critical {
+    border-left-color: #ff6b6b;
+    background: #fff5f5;
+  }
+  
+  .checklist-item.warning {
+    border-left-color: #ffa940;
+    background: #fffbf0;
+  }
+  
+  .checklist-item.optional {
+    border-left-color: #95de64;
+    background: #f6ffed;
+  }
+  
+  .checkbox {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    margin-top: 2px;
+    transition: all 0.2s;
+  }
+  
+  .checkbox:hover {
+    background: #f0f4ff;
+  }
+  
+  .checkbox.checked {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+  }
+  
+  .checkbox.checked::after {
+    content: "✓";
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .item-content {
+    flex: 1;
+  }
+  
+  .item-title {
+    font-weight: 600;
+    margin: 0 0 0.3rem 0;
+    color: #222;
+  }
+  
+  .item-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.3rem 0 0.5rem 0;
+    line-height: 1.4;
+  }
+  
+  .item-action {
+    font-size: 0.85rem;
+    background: #f0f4ff;
+    padding: 0.5rem 0.8rem;
+    border-radius: 3px;
+    font-family: "Monaco", "Courier New", monospace;
+    color: #667eea;
+    display: inline-block;
+    margin-top: 0.3rem;
+  }
+  
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  
+  .badge.critical {
+    background: #ff6b6b;
+    color: white;
+  }
+  
+  .badge.warning {
+    background: #ffa940;
+    color: white;
+  }
+  
+  .badge.optional {
+    background: #95de64;
+    color: #333;
+  }
+  
+  .info-box {
+    background: #e6f7ff;
+    border-left: 4px solid #1890ff;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  
+  .info-box strong {
+    color: #0050b3;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: width 0.3s;
+  }
+  
+  .footer {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+  }
+</style>
+
+<div class="checklist-container">
+  <div class="checklist-header">
+    <h1>📋 Live Pipeline Operator Checklist</h1>
+    <p>Follow this sequence for tonight's Løgtingval live run</p>
+    <div class="progress-bar" style="margin-top: 1.5rem;">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+  
+  <!-- PRE-LAUNCH CHECKS -->
+  <div class="checklist-section">
+    <div class="section-title">🔍 Pre-Launch Verification (Before 20:00)</div>
+    <div class="section-content">
+      
+      <div class="checklist-item critical">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge critical">CRITICAL</span>Confirm Model State</div>
+          <div class="item-description">Verify 2D model is active and ready. Check r_hat &lt; 1.02 and ESS &gt; 400.</div>
+          <div class="item-action">python -m freedom_nowcast.runner.cli phase3 validate-gates</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item critical">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge critical">CRITICAL</span>Verify Live Data Source</div>
+          <div class="item-description">Confirm KVF lv26 endpoint is responsive and returning ballot data.</div>
+          <div class="item-action">curl -s https://kvf.fo/lv26 | head -n 50</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item critical">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge critical">CRITICAL</span>Check Effective Configuration</div>
+          <div class="item-description">Verify kvf_fv26_url is set to https://kvf.fo/lv26 and stan_offline_model_path points to 2D.</div>
+          <div class="item-action">python -c "from freedom_nowcast.config import get_settings; s=get_settings(); print(f'URL: {s.kvf_fv26_url}, Model: {s.stan_offline_model_path}')"</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item warning">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge warning">IMPORTANT</span>Review Gate Failures</div>
+          <div class="item-description">2D has strict gate failures (r_hat 1.01393, coverage 0.514). This is expected. Per ship note: "GO for controlled 2D with caveat-driven confidence gating."</div>
+          <div class="item-action">View: reports/ship_note_2d_20260326.md</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge optional">OPTIONAL</span>Prepare Turnout Overrides</div>
+          <div class="item-description">If radio announces specific municipality/site turnout, load into config/live_turnout_overrides.csv (columns: scope, name, turnout_votes, turnout_percent). Both municipality and site-level overrides are supported.</div>
+          <div class="item-action">Edit: config/live_turnout_overrides.csv</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- DURING NIGHT -->
+  <div class="checklist-section">
+    <div class="section-title">⚡ During Election Night (20:00 - Close)</div>
+    <div class="section-content">
+      
+      <div class="checklist-item critical">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge critical">EVERY ~5 MIN</span>Fetch Live Data (Phase 1)</div>
+          <div class="item-description">Pulls latest ballot snapshot from KVF lv26 endpoint. Updates stream tables only (fast path, ~30 seconds).</div>
+          <div class="item-action">python -m freedom_nowcast.runner.cli phase1 ingest-live-fast</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item critical">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge critical">AFTER INGEST</span>Run Model (Phase 4)</div>
+          <div class="item-description">Executes online particle filter with latest ballot data. Generates predictive nowcast and confidence intervals.</div>
+          <div class="item-action">python -m freedom_nowcast.runner.cli phase4 run --election-family logtingsval</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item critical">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge critical">AFTER RUN</span>Update Dashboard (Phase 4)</div>
+          <div class="item-description">Rebuilds JSON payload and HTML pages. Pushes updates to public site.</div>
+          <div class="item-action">python -m freedom_nowcast.runner.cli phase4 dashboard-data</div>
+        </div>
+      </div>
+      
+      <div class="checklistem warning">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge warning">IF NEEDED</span>Apply Turnout Override</div>
+          <div class="item-description">When radio announces official turnout or specific site data: add row to config/live_turnout_overrides.csv and re-run phase4.</div>
+          <div class="item-action">Add row + rerun: python -m freedom_nowcast.runner.cli phase4 run --election-family logtingsval</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title"><span class="badge optional">MONITOR</span>Watch Confidence Intervals</div>
+          <div class="item-description">As more data comes in, confidence bands should narrow. Check nowcast page for convergence. If margins stay very wide (&gt;5%), monitor model state.</div>
+          <div class="item-action">Browse: https://[public-site]/nowcast.html</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- MANUAL OVERRIDES -->
+  <div class="checklist-section">
+    <div class="section-title">🔧 Manual Turnout Override Guide</div>
+    <div class="section-content">
+      
+      <div class="info-box">
+        <strong>✓ Supported Override Scopes:</strong><br>
+        • <code>municipality</code> - Apply turnout to entire municipality (e.g., "Torshavn", "Klaksvik")<br>
+        • <code>site</code> - Apply turnout to specific polling location (e.g., site IDs like "1001", "1002")
+      </div>
+      
+      <div class="info-box">
+        <strong>✓ CSV Format (config/live_turnout_overrides.csv):</strong><br>
+        <code>scope,name,turnout_votes,turnout_percent</code><br>
+        • Fill <code>turnout_votes</code> if you have absolute count<br>
+        • Fill <code>turnout_percent</code> if you have percentage only<br>
+        • Leave blank if not known (system infers from available data)
+      </div>
+      
+      <div class="info-box">
+        <strong>Example Entries:</strong><br>
+        <code>municipality,Klaksvik,2887,</code> (Klaksvik: 2,887 votes, % inferred)<br>
+        <code>municipality,Runavik,,77.2</code> (Runavik: 77.2% turnout, votes inferred)<br>
+        <code>site,1045,,68.5</code> (Site 1045: 68.5% turnout)
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- POST-EVENT -->
+  <div class="checklist-section">
+    <div class="section-title">📊 Post-Night Wrap-up</div>
+    <div class="section-content">
+      
+      <div class="checklist-item">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title">Archive Final Nowcast</div>
+          <div class="item-description">Save final HTML snapshots and payload for post-mortems.</div>
+          <div class="item-action">cp docs/dashboard/data/dashboard_payload.json reports/final_payload_lv26.json</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title">Review Model Diagnostics</div>
+          <div class="item-description">Check for divergences or pathologies in final night run.</div>
+          <div class="item-action">View: reports/model_convergence_report.json</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item">
+        <div class="checkbox" onclick="this.classList.toggle('checked'); updateProgress()"></div>
+        <div class="item-content">
+          <div class="item-title">Commit and Document</div>
+          <div class="item-description">Record turnout overrides and final state for next cycle.</div>
+          <div class="item-action">git add config/live_turnout_overrides.csv &amp;&amp; git commit -m "Final LV26 turnout overrides $(date +%Y%m%d)"</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- MODEL STATUS -->
+  <div class="checklist-section">
+    <div class="section-title">🧠 Model Status Summary</div>
+    <div class="section-content">
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        
+        <div style="padding: 1rem; background: #f0f4ff; border-radius: 6px; border-left: 4px solid #667eea;">
+          <strong style="color: #667eea;">Model:</strong> 2D Latent Structure<br>
+          <strong style="color: #667eea;">File:</strong> stan/offline_nowcast_2d.stan<br>
+          <strong style="color: #667eea;">Status:</strong> ✓ Operational<br>
+          <strong style="color: #667eea;">Frozen:</strong> artifacts/ship_2d_20260326_194752
+        </div>
+        
+        <div style="padding: 1rem; background: #f0f4ff; border-radius: 6px; border-left: 4px solid #667eea;">
+          <strong style="color: #667eea;">Live Source:</strong> https://kvf.fo/lv26<br>
+          <strong style="color: #667eea;">Pipeline:</strong> phase1 → phase4 cadence<br>
+          <strong style="color: #667eea;">Polls Policy:</strong> Diagnostics-only<br>
+          <strong style="color: #667eea;">Readiness:</strong> GO (with caveats)
+        </div>
+        
+      </div>
+      
+      <div style="margin-top: 1rem; padding: 1rem; background: #fffbf0; border-left: 4px solid #ffa940; border-radius: 6px;">
+        <strong style="color: #d46b08;">⚠️  Operational Caveat:</strong> National electorate undercoverage exists. 
+        Confidence must be gated on high-impact-site inclusion and weighted completeness, not site count alone. 
+        Monitor confidence intervals throughout the night.
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="footer">
+    Generated: 2026-03-26 | Model: 2D | Source: lv26 | Confidence: Caveat-Driven | 
+    <a href="https://github.com/freedom-nowcast/freedom_prog/blob/main/reports/ship_note_2d_20260326.md">Ship Note</a>
+  </div>
+  
 </div>
-<div class="grid-2-wide">
-<section class="panel">
-<h2 class="anchored">
-Flokkar: partur og sessir
-</h2>
-<div id="party-grid" class="party-grid">
-Loading…
-</div>
-</section>
-<section class="panel">
-<h2 class="anchored">
-Framgongd í uppteljing
-</h2>
-<div id="timeline" class="timeline">
-Loading…
-</div>
-</section>
-</div>
-<section class="panel">
-<h2 class="anchored">
-Stutt støðumeting
-</h2>
-<div id="map" class="status-note">
-Loading…
-</div>
-</section>
-<script src="assets/site.js"></script>
+
 <script>
-window.renderNowcastPage();
+function updateProgress() {
+  const checked = document.querySelectorAll('.checkbox.checked').length;
+  const total = document.querySelectorAll('.checkbox').length;
+  const percent = total > 0 ? (checked / total) * 100 : 0;
+  document.getElementById('progressFill').style.width = percent + '%';
+}
 </script>
 
 

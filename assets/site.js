@@ -1,117 +1,80 @@
 (function () {
   function buildPayloadCandidates() {
-    const origin = window.location.origin || '';
-    const pathname = window.location.pathname || '/';
-    const segments = pathname.split('/').filter(Boolean);
-    const projectBase = segments.length > 0 ? `/${segments[0]}` : '';
-    const currentDir = pathname.endsWith('/') ? pathname : pathname.replace(/[^/]*$/, '');
+    const origin = window.location.origin || "";
+    const pathname = window.location.pathname || "/";
+    const segments = pathname.split("/").filter(Boolean);
+    const projectBase = segments.length > 0 ? `/${segments[0]}` : "";
+    const currentDir = pathname.endsWith("/") ? pathname : pathname.replace(/[^/]*$/, "");
     const candidates = [
-      'data/dashboard_payload.json',
-      './data/dashboard_payload.json',
-      '/data/dashboard_payload.json',
-      '/dashboard/data/dashboard_payload.json',
+      "data/dashboard_payload.json",
+      "./data/dashboard_payload.json",
+      "/data/dashboard_payload.json",
+      "/dashboard/data/dashboard_payload.json",
       `${projectBase}/data/dashboard_payload.json`,
       `${origin}${projectBase}/data/dashboard_payload.json`,
       `${origin}${currentDir}data/dashboard_payload.json`,
     ];
-
     return [...new Set(candidates.filter(Boolean))];
   }
 
   const PAYLOAD_CANDIDATES = buildPayloadCandidates();
   const REPLAY_CANDIDATES = [
-    '../reports/lv2022_night_replay_report.json',
-    '/reports/lv2022_night_replay_report.json'
+    "../reports/lv2022_night_replay_report.json",
+    "/reports/lv2022_night_replay_report.json",
   ];
-  const MUNICIPALITY_CENTROIDS = {
-    torshavn: [62.01, -6.77],
-    runavik: [62.13, -6.78],
-    klaksvik: [62.23, -6.59],
-    sunda: [62.20, -7.02],
-    sorvagur: [62.07, -7.31],
-    vagar: [62.05, -7.20],
-    tvoroyri: [61.56, -6.81],
-    eystur: [62.17, -6.75],
-    fuglafjordur: [62.24, -6.81],
-    hvalba: [61.60, -6.96],
-    husa: [62.27, -6.68],
-    husavik: [61.91, -6.69],
-    hvalvik: [62.18, -7.00],
-    hov: [61.50, -6.76],
-    famjin: [61.55, -6.88],
-    porkeri: [61.47, -6.74],
-    sumba: [61.41, -6.69],
-    sandur: [61.84, -6.80],
-    skopun: [61.91, -6.88],
-    skalavik: [61.81, -6.66],
-    kvivik: [62.11, -7.07],
-    eidi: [62.30, -7.09],
-    nes: [62.10, -6.75],
-    sjorvar: [62.10, -6.76],
-    sjovar: [62.10, -6.76],
-    hvannasund: [62.28, -6.53],
-    kunoy: [62.30, -6.67],
-    vidareidi: [62.36, -6.53],
-    vagur: [61.47, -6.81],
-    skugvoy: [61.77, -6.81],
-    fugloy: [62.33, -6.28],
-    vestmanna: [62.16, -7.17],
-  };
 
-  function num(v, d = 2) {
-    const n = Number(v);
-    return Number.isFinite(n) ? n.toFixed(d) : '-';
+  function esc(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function toNumber(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function fmtNumber(value, digits) {
+    const n = toNumber(value);
+    return n === null ? "-" : n.toFixed(digits);
+  }
+
+  function fmtInt(value) {
+    const n = toNumber(value);
+    return n === null ? "-" : Math.round(n).toLocaleString("fo-FO");
+  }
+
+  function fmtPercent(value, digits) {
+    const n = toNumber(value);
+    return n === null ? "-" : `${n.toFixed(digits)}%`;
+  }
+
+  function maeDelta(modelMae, naiveMae) {
+    const m = toNumber(modelMae);
+    const n = toNumber(naiveMae);
+    if (m === null || n === null) return null;
+    return n - m;
   }
 
   function badge(status) {
-    if (status === 'passed') return '<span class="badge badge-pass">OK</span>';
-    if (status === 'failed') return '<span class="badge badge-fail">FEILUR</span>';
-    return '<span class="badge badge-missing">VANTAR</span>';
+    if (status === "passed") return '<span class="badge badge-pass">OK</span>';
+    if (status === "failed") return '<span class="badge badge-fail">Feilur</span>';
+    return '<span class="badge badge-missing">Vantar</span>';
   }
 
-  function esc(value) {
-    return String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+  function showError(containerId, message) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = `<div class="callout callout-error"><strong>Feilur:</strong> ${esc(message)}</div>`;
   }
 
-  function normalizeMunicipalityName(name) {
-    return String(name || '')
-      .normalize('NFKD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .replace(/\s*municipality/g, '')
-      .replace(/\s*,.*$/g, '')
-      .replace(/[^a-z0-9]+/g, ' ')
-      .trim();
-  }
-
-  function municipalityKey(name) {
-    const n = normalizeMunicipalityName(name);
-    if (n === 'eii') return 'eidi';
-    if (n === 'sjovar') return 'sjovar';
-    if (n === 'sorvagur') return 'sorvagur';
-    return n.replace(/\s+/g, '');
-  }
-
-  function markerColor(value, maxValue, palette) {
-    const t = maxValue > 0 ? (Number(value || 0) / maxValue) : 0;
-    if (palette === 'green') {
-      if (t > 0.66) return '#177c55';
-      if (t > 0.33) return '#3ba06f';
-      return '#78c297';
-    }
-    if (palette === 'red') {
-      if (t > 0.66) return '#c73529';
-      if (t > 0.33) return '#df6d63';
-      return '#ef9b95';
-    }
-    if (t > 0.66) return '#154b8b';
-    if (t > 0.33) return '#2f6fb8';
-    return '#6ea1dc';
+  function showEmpty(containerId, message) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = `<div class="callout"><strong>Upplating:</strong> ${esc(message)}</div>`;
   }
 
   async function getJson(urlOrUrls) {
@@ -119,334 +82,337 @@
     let lastErr = null;
     for (const url of urls) {
       try {
-        const r = await fetch(url, { cache: 'no-store' });
+        const r = await fetch(url, { cache: "no-store" });
         if (!r.ok) throw new Error(`fetch failed: ${r.status}`);
         return await r.json();
       } catch (err) {
         lastErr = err;
       }
     }
-    throw lastErr || new Error('fetch failed for all URLs');
+    throw lastErr || new Error("fetch failed for all URLs");
   }
 
-  function showError(containerId, message) {
-    const el = document.getElementById(containerId);
-    if (el) {
-      el.innerHTML = `<p><strong>Feilur:</strong> ${esc(message)}</p>`;
-    }
+  function safeRows(arrayLike) {
+    return Array.isArray(arrayLike) ? arrayLike : [];
+  }
+
+  function statusText(phase) {
+    if (phase === "passed") return "Tilbúgvið";
+    if (phase === "failed") return "Krevur arbeiði";
+    return "Ókent";
   }
 
   window.renderOverviewPage = async function () {
-    let p;
+    let payload;
     try {
-      p = await getJson(PAYLOAD_CANDIDATES);
+      payload = await getJson(PAYLOAD_CANDIDATES);
     } catch (err) {
-      showError('last-sync', err?.message || 'Kundi ikki lesa dashboard payload');
+      showError("last-sync", err?.message || "Kundi ikki lesa dashboard payload");
       return;
     }
-    document.getElementById('last-sync').textContent = `Dagført ${p.generated_at_utc || '-'}`;
-    document.getElementById('kpi-phase1').innerHTML = badge(p.phase_status?.phase1?.overall_status || 'missing');
-    document.getElementById('kpi-phase3').innerHTML = badge(p.phase_status?.phase3?.overall_status || 'missing');
-    document.getElementById('kpi-phase4').innerHTML = badge(p.phase_status?.phase4?.overall_status || 'missing');
-    document.getElementById('kpi-div').textContent = String(p.model?.n_divergences ?? '-');
+
+    const generated = payload.generated_at_utc || "-";
+    const phase = payload.phase_status || {};
+    const model = payload.model || {};
+
+    const lastSync = document.getElementById("last-sync");
+    if (lastSync) lastSync.textContent = `Dagført ${generated}`;
+
+    const p1 = phase.phase1?.overall_status || "missing";
+    const p3 = phase.phase3?.overall_status || "missing";
+    const p4 = phase.phase4?.overall_status || "missing";
+
+    const kpiP1 = document.getElementById("kpi-phase1");
+    const kpiP3 = document.getElementById("kpi-phase3");
+    const kpiP4 = document.getElementById("kpi-phase4");
+    const kpiDiv = document.getElementById("kpi-div");
+
+    if (kpiP1) kpiP1.innerHTML = `${badge(p1)}<div class="kpi-sub">${statusText(p1)}</div>`;
+    if (kpiP3) kpiP3.innerHTML = `${badge(p3)}<div class="kpi-sub">${statusText(p3)}</div>`;
+    if (kpiP4) kpiP4.innerHTML = `${badge(p4)}<div class="kpi-sub">${statusText(p4)}</div>`;
+    if (kpiDiv) kpiDiv.innerHTML = `<div class="kpi">${fmtInt(model.n_divergences)}</div><div class="kpi-sub">Tal eigur at vera 0</div>`;
   };
 
   window.renderNowcastPage = async function () {
-    let p;
+    let payload;
     try {
-      p = await getJson(PAYLOAD_CANDIDATES);
+      payload = await getJson(PAYLOAD_CANDIDATES);
     } catch (err) {
-      showError('party-grid', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('timeline', err?.message || 'Kundi ikki lesa dashboard payload');
+      showError("party-grid", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("timeline", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("map", err?.message || "Kundi ikki lesa dashboard payload");
       return;
     }
-    const demo = p.demo_nowcast || {};
-    const parties = Array.isArray(demo.parties) ? demo.parties : [];
-    const timeline = Array.isArray(demo.timeline) ? demo.timeline : [];
 
-    document.getElementById('party-grid').innerHTML = parties.map((x) => {
-      const up = Number(x.delta || 0) >= 0;
-      const sign = up ? '+' : '';
-      return `
-        <div class="party-card">
-          <div><strong>${x.party_id}</strong> <span class="party-name">${x.label}</span></div>
-          <div class="party-metric">${num(x.vote_share,1)}%</div>
-          <div class="${up ? 'party-delta-up' : 'party-delta-down'}">${sign}${num(x.delta,1)} pp</div>
-          <div>Sessir: <strong>${x.seat_mid}</strong> (${x.seat_lo}-${x.seat_hi})</div>
+    const demo = payload.demo_nowcast || {};
+    const parties = safeRows(demo.parties)
+      .filter((x) => toNumber(x.vote_share) !== null)
+      .sort((a, b) => (toNumber(b.vote_share) || 0) - (toNumber(a.vote_share) || 0));
+
+    const partyGrid = document.getElementById("party-grid");
+    if (!parties.length) {
+      showEmpty("party-grid", "Eingin flokksmeting er tøk enn.");
+    } else if (partyGrid) {
+      partyGrid.innerHTML = parties
+        .map((x) => {
+          const delta = toNumber(x.delta) || 0;
+          const up = delta >= 0;
+          const sign = up ? "+" : "";
+          const partyId = String(x.party_id || "").trim();
+          const label = String(x.label || "").trim();
+          const showId = label && label.toUpperCase() !== partyId.toUpperCase();
+          return `
+            <article class="party-card">
+              <div class="party-topline">
+                <strong>${esc(label || partyId || "-")}</strong>
+                ${showId ? `<span class="party-name">(${esc(partyId)})</span>` : ""}
+              </div>
+              <div class="party-metric">${fmtPercent(x.vote_share, 1)}</div>
+              <div class="${up ? "party-delta-up" : "party-delta-down"}">${sign}${fmtNumber(delta, 1)} pp</div>
+              <div class="party-seatline">Sessir: <strong>${fmtInt(x.seat_mid)}</strong> (${fmtInt(x.seat_lo)}-${fmtInt(x.seat_hi)})</div>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    const timelineRows = safeRows(demo.timeline)
+      .map((row) => ({
+        t: String(row.t || "-"),
+        reportedPct: toNumber(row.reported_pct),
+        uncertainty: toNumber(row.uncertainty),
+      }))
+      .filter((row) => row.reportedPct !== null || row.uncertainty !== null);
+
+    const timeline = document.getElementById("timeline");
+    if (!timelineRows.length) {
+      showEmpty("timeline", "Eingin framgongd-data er tøk enn.");
+    } else if (timelineRows.length === 1 && timeline) {
+      const only = timelineRows[0];
+      timeline.innerHTML = `
+        <div class="callout">
+          <p><strong>Tid:</strong> ${esc(only.t)}</p>
+          <p><strong>Uppgjort:</strong> ${fmtPercent(only.reportedPct, 1)}</p>
+          <p><strong>Ovissa:</strong> ±${fmtNumber(only.uncertainty, 1)}</p>
         </div>
       `;
-    }).join('');
+    } else if (timeline) {
+      const maxUncertainty = Math.max(0.1, ...timelineRows.map((x) => x.uncertainty || 0));
+      timeline.innerHTML = timelineRows
+        .map((row) => {
+          const reported = Math.max(0, Math.min(100, row.reportedPct || 0));
+          const uncertainty = Math.max(0, row.uncertainty || 0);
+          const uncertaintyBar = Math.max(4, Math.round((uncertainty / maxUncertainty) * 100));
+          return `
+            <div class="timeline-row">
+              <div class="timeline-time">${esc(row.t)}</div>
+              <div>
+                <div class="track"><div class="fill-reported" style="width:${reported}%"></div></div>
+                <div class="track"><div class="fill-unc" style="width:${uncertaintyBar}%"></div></div>
+              </div>
+              <div class="timeline-v">${fmtPercent(reported, 1)} / ±${fmtNumber(uncertainty, 1)}</div>
+            </div>
+          `;
+        })
+        .join("");
+    }
 
-    const maxU = Math.max(1, ...timeline.map((t) => Number(t.uncertainty || 0)));
-    document.getElementById('timeline').innerHTML = timeline.map((t) => {
-      const rp = Number(t.reported_pct || 0);
-      const un = Number(t.uncertainty || 0);
-      const uw = Math.max(5, Math.min(100, Math.round((un / maxU) * 100)));
-      return `
-        <div class="timeline-row">
-          <div class="timeline-time">${t.t}</div>
-          <div>
-            <div class="track"><div class="fill-reported" style="width:${rp}%"></div></div>
-            <div class="track"><div class="fill-unc" style="width:${uw}%"></div></div>
-          </div>
-          <div class="timeline-v">${rp}% / ±${num(un,1)}</div>
+    const map = document.getElementById("map");
+    if (map) {
+      const latest = timelineRows[timelineRows.length - 1] || null;
+      map.innerHTML = `
+        <div class="callout">
+          <p><strong>Samandráttur:</strong> Núverandi síða vísir bert staðfestar kjarnutøl.</p>
+          <p><strong>Seinasta framgongd:</strong> ${latest ? `${fmtPercent(latest.reportedPct, 1)} uppgjørt, óvissa ±${fmtNumber(latest.uncertainty, 1)}` : "Ikki tøk"}</p>
+          <p><strong>Viðmerking:</strong> Landakort er tikið burtur av hesi síðu fyri at sleppa undan villleiðandi visualisering.</p>
         </div>
       `;
-    }).join('');
-
-    if (typeof L !== 'undefined') {
-      const map = L.map('map', { scrollWheelZoom: false }).setView([62.05, -6.95], 8);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
-      [[62.01,-6.77,'Tórshavn'],[62.23,-6.59,'Klaksvík'],[62.07,-7.11,'Vestmanna'],[61.47,-6.81,'Vágur'],[62.16,-7.18,'Sørvágur']]
-        .forEach((m) => L.circleMarker([m[0],m[1]], { radius: 8, color: '#fff', weight: 2, fillColor: '#c73529', fillOpacity: .92 }).bindPopup(m[2]).addTo(map));
     }
   };
 
   window.renderDiagnosticsPage = async function () {
-    let p;
+    let payload;
     try {
-      p = await getJson(PAYLOAD_CANDIDATES);
+      payload = await getJson(PAYLOAD_CANDIDATES);
     } catch (err) {
-      showError('gate-table', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('model-summary', err?.message || 'Kundi ikki lesa dashboard payload');
+      showError("gate-table", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("model-summary", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("ppc-bars", err?.message || "Kundi ikki lesa dashboard payload");
       return;
     }
-    const phase = p.phase_status || {};
-    const rows = [['Phase 1', phase.phase1 || {}], ['Phase 3', phase.phase3 || {}], ['Phase 4', phase.phase4 || {}]];
 
-    document.getElementById('gate-table').innerHTML = `
-      <table class="status-table">
-        <thead><tr><th>Fasa</th><th>Støða</th><th>Tal av feilum</th></tr></thead>
-        <tbody>${rows.map(([label,v]) => `<tr><td>${label}</td><td>${badge(v.overall_status || 'missing')}</td><td>${v.failed_count || 0}</td></tr>`).join('')}</tbody>
-      </table>
-    `;
+    const phase = payload.phase_status || {};
+    const rows = [
+      ["Phase 1", phase.phase1 || {}],
+      ["Phase 3", phase.phase3 || {}],
+      ["Phase 4", phase.phase4 || {}],
+    ];
 
-    const m = p.model || {};
-    document.getElementById('model-summary').innerHTML = `
-      <p><strong>Konvergerað:</strong> ${m.converged ? 'Ja' : 'Nei'}</p>
-      <p><strong>Rhat max:</strong> ${num(m.rhat_max,3)}</p>
-      <p><strong>ESS bulk min:</strong> ${num(m.ess_bulk_min,2)}</p>
-      <p><strong>Divergensir:</strong> ${m.n_divergences ?? '-'}</p>
-      <p><strong>PPC dekningspartur (90%):</strong> ${num(m.coverage_vote_share_90,2)}</p>
-    `;
-
-    const ppc = Array.isArray(m.ppc_party) ? m.ppc_party : [];
-    document.getElementById('ppc-bars').innerHTML = ppc.map((x) => {
-      const v = Math.max(0, Math.min(1, Number(x.ppc_p_value || 0)));
-      return `<div class="bar-row"><div>${x.party_id}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v*100)}%"></div></div><div>${v.toFixed(2)}</div></div>`;
-    }).join('');
-  };
-
-  window.renderDataPage = async function () {
-    let p;
-    try {
-      p = await getJson(PAYLOAD_CANDIDATES);
-    } catch (err) {
-      showError('data-overview', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('data-counts', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('consistency-flags', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('mapping-summary', err?.message || 'Kundi ikki lesa dashboard payload');
-      return;
-    }
-    const audit = p.data_audit || {};
-    const consistency = audit.consistency || {};
-    const counts = consistency.counts || {};
-    const muni = audit.municipality_resolution || {};
-    const ib = audit.ib01031_summary || {};
-    const muniCounts = Array.isArray(ib.municipality_counts) ? ib.municipality_counts : [];
-    const rows = Array.isArray(audit.mapping_rows) ? audit.mapping_rows : [];
-    const historical = p.historical_overlays || {};
-
-    document.getElementById('data-overview').innerHTML = `
-      <p><strong>IB01031 mánði:</strong> ${esc(ib.ib01031_month || '-')}</p>
-      <p><strong>Lokalitetir:</strong> ${ib.total_localities ?? '-'}</p>
-      <p><strong>Mappaðir:</strong> ${ib.ib01031_mapped ?? '-'}</p>
-      <p><strong>Ómappaðir:</strong> ${ib.ib01031_unmapped ?? '-'}</p>
-      <p><strong>Klárt til training:</strong> ${(consistency.ready_for_training === true) ? 'Ja' : 'Nei'}</p>
-      <p><strong>Klárt til live run:</strong> ${(consistency.ready_for_live_run === true) ? 'Ja' : 'Nei'}</p>
-    `;
-
-    document.getElementById('data-counts').innerHTML = `
-      <table class="status-table">
-        <thead><tr><th>Talva</th><th>Raðir</th></tr></thead>
-        <tbody>
-          ${Object.entries(counts).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}
-        </tbody>
-      </table>
-    `;
-
-    const checks = muni.checks || {};
-    document.getElementById('consistency-flags').innerHTML = `
-      <p><strong>Mapping-fíla:</strong> ${esc(checks.mapping_file || '-')}</p>
-      <p><strong>Coverage rows:</strong> ${esc(checks.coverage_rows ?? '-')}</p>
-      <p><strong>Candidate rows:</strong> ${esc(checks.candidate_rows ?? '-')}</p>
-      <p><strong>Override rows:</strong> ${esc(checks.override_rows ?? '-')}</p>
-      <p><strong>Pending candidates:</strong> ${esc(checks.pending_candidates ?? '-')}</p>
-      <p><strong>Strict mode:</strong> ${checks.strict ? 'Ja' : 'Nei'}</p>
-    `;
-
-    document.getElementById('mapping-summary').innerHTML = `
-      <table class="status-table">
-        <thead><tr><th>Kommuna</th><th>Lokalitetir</th></tr></thead>
-        <tbody>
-          ${muniCounts.slice(0, 40).map((x) => `<tr><td>${esc(x.municipality)}</td><td>${esc(x.localities)}</td></tr>`).join('')}
-        </tbody>
-      </table>
-    `;
-
-    const filterBox = document.getElementById('mapping-filter');
-    const tableNode = document.getElementById('mapping-table');
-
-    function drawMappingTable(query) {
-      const q = String(query || '').trim().toLowerCase();
-      const filtered = rows.filter((x) => {
-        if (!q) return true;
-        const loc = String(x.locality || '').toLowerCase();
-        const mun = String(x.municipality_current || '').toLowerCase();
-        const code = String(x.locality_code || '').toLowerCase();
-        return loc.includes(q) || mun.includes(q) || code.includes(q);
-      }).slice(0, 200);
-
-      tableNode.innerHTML = `
+    const gateTable = document.getElementById("gate-table");
+    if (gateTable) {
+      gateTable.innerHTML = `
         <table class="status-table">
-          <thead><tr><th>Kota</th><th>Lokalitetur</th><th>Kommuna</th><th>Fólkatal</th></tr></thead>
+          <thead><tr><th>Fasa</th><th>Støða</th><th>Feilir</th></tr></thead>
           <tbody>
-            ${filtered.map((x) => `<tr><td>${esc(x.locality_code)}</td><td>${esc(x.locality)}</td><td>${esc(x.municipality_current)}</td><td>${num(x.population, 0)}</td></tr>`).join('')}
+            ${rows
+              .map(([label, val]) => `<tr><td>${label}</td><td>${badge(val.overall_status || "missing")}</td><td>${fmtInt(val.failed_count || 0)}</td></tr>`)
+              .join("")}
           </tbody>
         </table>
       `;
     }
 
-    drawMappingTable('');
-    if (filterBox) {
-      filterBox.addEventListener('input', () => drawMappingTable(filterBox.value));
+    const model = payload.model || {};
+    const modelSummary = document.getElementById("model-summary");
+    if (modelSummary) {
+      modelSummary.innerHTML = `
+        <div class="stats-list">
+          <div><strong>Konvergerað:</strong> ${model.converged ? "Ja" : "Nei"}</div>
+          <div><strong>Rhat max:</strong> ${fmtNumber(model.rhat_max, 3)}</div>
+          <div><strong>ESS bulk min:</strong> ${fmtNumber(model.ess_bulk_min, 2)}</div>
+          <div><strong>Divergensir:</strong> ${fmtInt(model.n_divergences)}</div>
+          <div><strong>PPC coverage (90%):</strong> ${fmtNumber(model.coverage_vote_share_90, 2)}</div>
+        </div>
+      `;
     }
 
-    const overlaySelect = document.getElementById('municipality-overlay');
-    const timeSelect = document.getElementById('overlay-timepoint');
-    const mapNode = document.getElementById('municipality-map');
-
-    const histMost = Array.isArray(historical.most_distinct_sites) ? historical.most_distinct_sites : [];
-    const histClose = Array.isArray(historical.closest_sites) ? historical.closest_sites : [];
-    const histTimes = [...new Set([...histMost, ...histClose].map((x) => String(x.timestamp || '')).filter(Boolean))].sort();
-    timeSelect.innerHTML = histTimes.map((t) => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
-
-    if (typeof L !== 'undefined' && mapNode) {
-      const map = L.map('municipality-map', { scrollWheelZoom: false }).setView([62.05, -6.95], 8);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
-      const layer = L.layerGroup().addTo(map);
-
-      function municipalityCenter(name) {
-        const key = municipalityKey(name);
-        return MUNICIPALITY_CENTROIDS[key] || [62.02, -6.90];
-      }
-
-      const localityToMunicipality = new Map();
-      rows.forEach((r) => {
-        localityToMunicipality.set(normalizeMunicipalityName(r.locality), r.municipality_current);
-      });
-
-      function aggregatePopulation() {
-        const acc = new Map();
-        rows.forEach((r) => {
-          const key = String(r.municipality_current || 'Unknown');
-          const cur = acc.get(key) || { municipality: key, value: 0, localities: 0 };
-          cur.value += Number(r.population || 0);
-          cur.localities += 1;
-          acc.set(key, cur);
-        });
-        return [...acc.values()];
-      }
-
-      function aggregateLocalities() {
-        return muniCounts.map((m) => ({ municipality: m.municipality, value: Number(m.localities || 0), localities: Number(m.localities || 0) }));
-      }
-
-      function historicalRows(kind, timepoint) {
-        const source = kind === 'history-close' ? histClose : histMost;
-        const subset = source.filter((x) => !timepoint || String(x.timestamp || '') === String(timepoint));
-        return subset.map((x) => {
-          const normSite = normalizeMunicipalityName(x.site_name || '');
-          let municipality = 'Unknown';
-          rows.some((r) => {
-            const loc = normalizeMunicipalityName(r.locality || '');
-            if (loc === normSite || loc.includes(normSite) || normSite.includes(loc)) {
-              municipality = r.municipality_current || 'Unknown';
-              return true;
-            }
-            return false;
-          });
-          return {
-            municipality,
-            site_name: x.site_name,
-            timestamp: x.timestamp,
-            value: Number(x.distance_l1 || 0),
-            votes_total: Number(x.votes_total || 0),
-          };
-        });
-      }
-
-      function renderOverlay() {
-        layer.clearLayers();
-        const mode = overlaySelect.value;
-        const timepoint = timeSelect.value;
-        let records = [];
-        let palette = 'blue';
-        let radiusBase = 8;
-
-        if (mode === 'population') {
-          records = aggregatePopulation();
-          palette = 'blue';
-          radiusBase = 10;
-        } else if (mode === 'localities') {
-          records = aggregateLocalities();
-          palette = 'blue';
-          radiusBase = 8;
-        } else if (mode === 'history-most') {
-          records = historicalRows(mode, timepoint);
-          palette = 'red';
-          radiusBase = 10;
-        } else {
-          records = historicalRows(mode, timepoint);
-          palette = 'green';
-          radiusBase = 10;
-        }
-
-        const maxValue = Math.max(1, ...records.map((r) => Number(r.value || 0)));
-        records.forEach((r) => {
-          const center = municipalityCenter(r.municipality);
-          const value = Number(r.value || 0);
-          const radius = Math.max(6, Math.min(22, radiusBase + Math.round((value / maxValue) * 12)));
-          const color = markerColor(value, maxValue, palette);
-          const popup = mode.startsWith('history')
-            ? `<strong>${esc(r.municipality)}</strong><br/>Støð: ${esc(r.site_name || '-')}<br/>Tíð: ${esc(r.timestamp || '-')}<br/>L1-frástøða: ${num(value,3)}<br/>Atkvøður: ${esc(r.votes_total ?? '-')}`
-            : `<strong>${esc(r.municipality)}</strong><br/>Virði: ${num(value, 1)}<br/>Lokalitetir: ${esc(r.localities ?? '-')}`;
-
-          L.circleMarker(center, {
-            radius,
-            color: '#ffffff',
-            weight: 2,
-            fillColor: color,
-            fillOpacity: 0.9,
-          }).bindPopup(popup).addTo(layer);
-        });
-      }
-
-      if (!timeSelect.value && histTimes.length) {
-        timeSelect.value = histTimes[0];
-      }
-      overlaySelect.addEventListener('change', renderOverlay);
-      timeSelect.addEventListener('change', renderOverlay);
-      renderOverlay();
+    const ppc = safeRows(model.ppc_party);
+    const bars = document.getElementById("ppc-bars");
+    if (!ppc.length) {
+      showEmpty("ppc-bars", "Eingin ppc flokkslisti funnin.");
+    } else if (bars) {
+      bars.innerHTML = ppc
+        .map((x) => {
+          const val = Math.max(0, Math.min(1, toNumber(x.ppc_p_value) || 0));
+          return `
+            <div class="bar-row">
+              <div>${esc(x.party_id || "-")}</div>
+              <div class="bar-track"><div class="bar-fill" style="width:${Math.round(val * 100)}%"></div></div>
+              <div>${fmtNumber(val, 2)}</div>
+            </div>
+          `;
+        })
+        .join("");
     }
+  };
+
+  window.renderDataPage = async function () {
+    let payload;
+    try {
+      payload = await getJson(PAYLOAD_CANDIDATES);
+    } catch (err) {
+      showError("data-overview", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("data-counts", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("consistency-flags", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("mapping-summary", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("mapping-table", err?.message || "Kundi ikki lesa dashboard payload");
+      return;
+    }
+
+    const audit = payload.data_audit || {};
+    const consistency = audit.consistency || {};
+    const counts = consistency.counts || {};
+    const ib = audit.ib01031_summary || {};
+    const muni = audit.municipality_resolution || {};
+    const muniCounts = safeRows(ib.municipality_counts);
+    const rows = safeRows(audit.mapping_rows);
+
+    const overview = document.getElementById("data-overview");
+    if (overview) {
+      overview.innerHTML = `
+        <div class="stats-list">
+          <div><strong>IB01031 mánði:</strong> ${esc(ib.ib01031_month || "-")}</div>
+          <div><strong>Lokalitetir:</strong> ${fmtInt(ib.total_localities)}</div>
+          <div><strong>Mappaðir:</strong> ${fmtInt(ib.ib01031_mapped)}</div>
+          <div><strong>Ómappaðir:</strong> ${fmtInt(ib.ib01031_unmapped)}</div>
+          <div><strong>Klárt til training:</strong> ${consistency.ready_for_training === true ? "Ja" : "Nei"}</div>
+          <div><strong>Klárt til live run:</strong> ${consistency.ready_for_live_run === true ? "Ja" : "Nei"}</div>
+        </div>
+      `;
+    }
+
+    const countsNode = document.getElementById("data-counts");
+    const orderedCounts = Object.entries(counts).sort((a, b) => String(a[0]).localeCompare(String(b[0])));
+    if (!orderedCounts.length) {
+      showEmpty("data-counts", "Eingin talvusamandráttur er tøk.");
+    } else if (countsNode) {
+      countsNode.innerHTML = `
+        <table class="status-table">
+          <thead><tr><th>Talva</th><th>Raðir</th></tr></thead>
+          <tbody>${orderedCounts.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${fmtInt(v)}</td></tr>`).join("")}</tbody>
+        </table>
+      `;
+    }
+
+    const checks = muni.checks || {};
+    const flags = document.getElementById("consistency-flags");
+    if (flags) {
+      flags.innerHTML = `
+        <div class="stats-list">
+          <div><strong>Mapping-fila:</strong> ${esc(checks.mapping_file || "-")}</div>
+          <div><strong>Coverage rows:</strong> ${fmtInt(checks.coverage_rows)}</div>
+          <div><strong>Candidate rows:</strong> ${fmtInt(checks.candidate_rows)}</div>
+          <div><strong>Override rows:</strong> ${fmtInt(checks.override_rows)}</div>
+          <div><strong>Pending candidates:</strong> ${fmtInt(checks.pending_candidates)}</div>
+          <div><strong>Strict mode:</strong> ${checks.strict ? "Ja" : "Nei"}</div>
+        </div>
+      `;
+    }
+
+    const summary = document.getElementById("mapping-summary");
+    if (!muniCounts.length) {
+      showEmpty("mapping-summary", "Eingin kommunusamandráttur er tøk.");
+    } else if (summary) {
+      summary.innerHTML = `
+        <table class="status-table">
+          <thead><tr><th>Kommuna</th><th>Lokalitetir</th></tr></thead>
+          <tbody>${muniCounts.slice(0, 50).map((x) => `<tr><td>${esc(x.municipality)}</td><td>${fmtInt(x.localities)}</td></tr>`).join("")}</tbody>
+        </table>
+      `;
+    }
+
+    const overlaySelect = document.getElementById("municipality-overlay");
+    const timeSelect = document.getElementById("overlay-timepoint");
+    const mapNode = document.getElementById("municipality-map");
+    if (overlaySelect && timeSelect && mapNode) {
+      mapNode.innerHTML = "<div class='callout'>Kommunu-overlay er ikki viðkomandi fyri driftsstodu jattan her; brúka tabellina omanfyri.</div>";
+      overlaySelect.disabled = true;
+      timeSelect.disabled = true;
+    }
+
+    const filterBox = document.getElementById("mapping-filter");
+    const tableNode = document.getElementById("mapping-table");
+    function renderMapRows(query) {
+      const q = String(query || "").trim().toLowerCase();
+      const filtered = rows
+        .filter((x) => {
+          if (!q) return true;
+          const loc = String(x.locality || "").toLowerCase();
+          const munName = String(x.municipality_current || "").toLowerCase();
+          const code = String(x.locality_code || "").toLowerCase();
+          return loc.includes(q) || munName.includes(q) || code.includes(q);
+        })
+        .slice(0, 300);
+
+      if (!tableNode) return;
+      if (!filtered.length) {
+        tableNode.innerHTML = "<div class='callout'>Eingin lokalitetur fannst við hesum filtri.</div>";
+        return;
+      }
+      tableNode.innerHTML = `
+        <table class="status-table">
+          <thead><tr><th>Kota</th><th>Lokalitetur</th><th>Kommuna</th><th>Folkatal</th></tr></thead>
+          <tbody>
+            ${filtered
+              .map((x) => `<tr><td>${esc(x.locality_code)}</td><td>${esc(x.locality)}</td><td>${esc(x.municipality_current)}</td><td>${fmtInt(x.population)}</td></tr>`)
+              .join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    renderMapRows("");
+    if (filterBox) filterBox.addEventListener("input", () => renderMapRows(filterBox.value));
   };
 
   window.renderReplayPage = async function () {
@@ -454,144 +420,119 @@
     try {
       payload = await getJson(PAYLOAD_CANDIDATES);
     } catch (err) {
-      showError('replay-summary', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('replay-eval', err?.message || 'Kundi ikki lesa dashboard payload');
+      showError("replay-summary", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("replay-eval", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("replay-trace", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("replay-map", err?.message || "Kundi ikki lesa dashboard payload");
       return;
     }
-    let replays = Array.isArray(payload.replays) ? payload.replays : [];
+
+    let replays = safeRows(payload.replays);
     if (!replays.length) {
-      const fallback = await getJson(REPLAY_CANDIDATES);
-      replays = [{
-        election: fallback.election || 'Replay',
-        n_updates: fallback.n_updates || 0,
-        final_timestamp: fallback.final_timestamp || '-',
-        summary: fallback.summary || {},
-        trace: Array.isArray(fallback.trace) ? fallback.trace : [],
-      }];
+      try {
+        const fallback = await getJson(REPLAY_CANDIDATES);
+        replays = [
+          {
+            election: fallback.election || "Replay",
+            n_updates: fallback.n_updates || 0,
+            final_timestamp: fallback.final_timestamp || "-",
+            summary: fallback.summary || {},
+            trace: safeRows(fallback.trace),
+          },
+        ];
+      } catch (err) {
+        showEmpty("replay-summary", "Eingin replay-data er tøk.");
+        showEmpty("replay-eval", "Eingin replay-data er tøk.");
+        showEmpty("replay-trace", "Eingin replay-data er tøk.");
+        showEmpty("replay-map", "Replay-kort er tikið burtur fyri at forða fyri villleiding.");
+        return;
+      }
     }
 
-    const electionSelect = document.getElementById('replay-election');
-    const timepointSelect = document.getElementById('replay-timepoint');
-    const summaryNode = document.getElementById('replay-summary');
-    const evalNode = document.getElementById('replay-eval');
-    const traceNode = document.getElementById('replay-trace');
-    const replayMapNode = document.getElementById('replay-map');
-    const historical = payload.historical_overlays || {};
-    const histMost = Array.isArray(historical.most_distinct_sites) ? historical.most_distinct_sites : [];
-    const histClose = Array.isArray(historical.closest_sites) ? historical.closest_sites : [];
-    const mappingRows = Array.isArray(payload.data_audit?.mapping_rows) ? payload.data_audit.mapping_rows : [];
+    const electionSelect = document.getElementById("replay-election");
+    const timepointSelect = document.getElementById("replay-timepoint");
+    const summaryNode = document.getElementById("replay-summary");
+    const evalNode = document.getElementById("replay-eval");
+    const traceNode = document.getElementById("replay-trace");
+    const replayMapNode = document.getElementById("replay-map");
 
-    electionSelect.innerHTML = replays.map((r, idx) => `<option value="${idx}">${esc(r.election || `Val ${idx + 1}`)}</option>`).join('');
+    if (replayMapNode) {
+      replayMapNode.innerHTML = "<div class='callout'>Replay-kort er tikið burtur. Bruka tabellur niðanfyri fyri greiðan samanburd.</div>";
+    }
+
+    if (!electionSelect || !timepointSelect || !summaryNode || !evalNode || !traceNode) {
+      return;
+    }
+
+    electionSelect.innerHTML = replays
+      .map((r, idx) => `<option value="${idx}">${esc(r.election || `Val ${idx + 1}`)}</option>`)
+      .join("");
 
     function renderTraceTable(trace, selectedTimestamp) {
       traceNode.innerHTML = `
         <table class="status-table">
-          <thead><tr><th>Tíð</th><th>Uppgjørt %</th><th>MAE model</th><th>MAE naive</th><th>Betri/verri %</th></tr></thead>
+          <thead><tr><th>Tid</th><th>Uppgjort %</th><th>MAE model</th><th>MAE naive</th><th>Delta (naive-model)</th></tr></thead>
           <tbody>
-            ${trace.map((x) => {
-              const selected = x.timestamp === selectedTimestamp ? ' selected-row' : '';
-              return `<tr class="${selected}"><td>${esc(x.timestamp)}</td><td>${num(x.reported_pct,1)}</td><td>${num(x.mae_model,4)}</td><td>${num(x.mae_naive,4)}</td><td>${num(x.improvement_pct,2)}</td></tr>`;
-            }).join('')}
+            ${trace
+              .map((x) => {
+                const selected = String(x.timestamp || "") === String(selectedTimestamp || "") ? " selected-row" : "";
+                return `<tr class="${selected}"><td>${esc(x.timestamp)}</td><td>${fmtNumber(x.reported_pct, 1)}</td><td>${fmtNumber(x.mae_model, 4)}</td><td>${fmtNumber(x.mae_naive, 4)}</td><td>${fmtNumber(maeDelta(x.mae_model, x.mae_naive), 4)}</td></tr>`;
+              })
+              .join("")}
           </tbody>
         </table>
       `;
     }
 
-    let replayMap = null;
-    let replayLayer = null;
-    if (typeof L !== 'undefined' && replayMapNode) {
-      replayMap = L.map('replay-map', { scrollWheelZoom: false }).setView([62.05, -6.95], 8);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(replayMap);
-      replayLayer = L.layerGroup().addTo(replayMap);
-    }
-
-    function municipalityForSite(siteName) {
-      const norm = normalizeMunicipalityName(siteName);
-      let municipality = 'Unknown';
-      mappingRows.some((r) => {
-        const loc = normalizeMunicipalityName(r.locality || '');
-        if (loc === norm || loc.includes(norm) || norm.includes(loc)) {
-          municipality = r.municipality_current || 'Unknown';
-          return true;
-        }
-        return false;
-      });
-      return municipality;
-    }
-
-    function renderHistoricalReplayMap(timepoint) {
-      if (!replayMap || !replayLayer) return;
-      replayLayer.clearLayers();
-
-      const points = [
-        ...histMost.filter((x) => String(x.timestamp || '') === String(timepoint)).map((x) => ({ ...x, type: 'most' })),
-        ...histClose.filter((x) => String(x.timestamp || '') === String(timepoint)).map((x) => ({ ...x, type: 'close' })),
-      ];
-
-      points.forEach((x) => {
-        const municipality = municipalityForSite(x.site_name || '');
-        const center = MUNICIPALITY_CENTROIDS[municipalityKey(municipality)] || [62.02, -6.90];
-        const isMost = x.type === 'most';
-        const color = isMost ? '#c73529' : '#177c55';
-        const radius = Math.max(7, Math.min(18, 7 + Math.round(Number(x.distance_l1 || 0) * 24)));
-        L.circleMarker(center, {
-          radius,
-          color: '#fff',
-          weight: 2,
-          fillColor: color,
-          fillOpacity: 0.9,
-        })
-          .bindPopup(`<strong>${esc(municipality)}</strong><br/>Støð: ${esc(x.site_name || '-')}<br/>Tíð: ${esc(x.timestamp || '-')}<br/>L1-frástøða: ${num(x.distance_l1,3)}<br/>Slag: ${isMost ? 'Mest avvikandi' : 'Mest lík landsúrsliti'}`)
-          .addTo(replayLayer);
-      });
-    }
-
     function renderElection() {
       const replay = replays[Number(electionSelect.value) || 0] || replays[0] || {};
       const summary = replay.summary || {};
-      const trace = Array.isArray(replay.trace) ? replay.trace : [];
-      const times = trace.map((x) => String(x.timestamp || '')).filter(Boolean);
-
-      timepointSelect.innerHTML = times.map((t) => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
-      if (!timepointSelect.value && times.length) {
-        timepointSelect.value = times[Math.floor(times.length / 2)];
-      }
+      const trace = safeRows(replay.trace);
+      const times = trace.map((x) => String(x.timestamp || "")).filter(Boolean);
+      timepointSelect.innerHTML = times.map((t) => `<option value="${esc(t)}">${esc(t)}</option>`).join("");
+      if (!timepointSelect.value && times.length) timepointSelect.value = times[Math.floor(times.length / 2)];
 
       summaryNode.innerHTML = `
-        <p><strong>Val:</strong> ${esc(replay.election || '-')}</p>
-        <p><strong>Updates:</strong> ${esc(replay.n_updates ?? '-')}</p>
-        <p><strong>Seinasta tíð:</strong> ${esc(replay.final_timestamp || '-')}</p>
-        <p><strong>Average improvement:</strong> ${num(summary.avg_improvement_pct,2)}%</p>
-        <p><strong>Average improvement tíðliga (<=25%):</strong> ${num(summary.avg_improvement_pct_early_25,2)}%</p>
+        <div class="stats-list">
+          <div><strong>Val:</strong> ${esc(replay.election || "-")}</div>
+          <div><strong>Updates:</strong> ${fmtInt(replay.n_updates)}</div>
+          <div><strong>Seinasta tid:</strong> ${esc(replay.final_timestamp || "-")}</div>
+          <div><strong>Byrjan (model MAE):</strong> ${fmtNumber(summary.first_update?.mae_model, 4)}</div>
+          <div><strong>Midan (model MAE):</strong> ${fmtNumber(summary.mid_update?.mae_model, 4)}</div>
+          <div><strong>Endi (model MAE):</strong> ${fmtNumber(summary.last_update?.mae_model, 4)}</div>
+        </div>
       `;
 
-      renderTimepoint();
-
       function renderTimepoint() {
-        const ts = String(timepointSelect.value || '');
-        const row = trace.find((x) => String(x.timestamp || '') === ts) || trace[0] || null;
+        const ts = String(timepointSelect.value || "");
+        const row = trace.find((x) => String(x.timestamp || "") === ts) || trace[0] || null;
         if (!row) {
-          evalNode.innerHTML = '<p>Eingin replay-data funnin.</p>';
-          traceNode.innerHTML = '';
+          evalNode.innerHTML = "<div class='callout'>Eingin replay-meting fyri valda tid.</div>";
+          traceNode.innerHTML = "";
           return;
         }
 
         evalNode.innerHTML = `
-          <p><strong>Tíðspunkt:</strong> ${esc(row.timestamp)}</p>
-          <p><strong>Uppgjørt partur:</strong> ${num(row.reported_pct,1)}%</p>
-          <p><strong>Model MAE:</strong> ${num(row.mae_model,4)}</p>
-          <p><strong>Naive MAE:</strong> ${num(row.mae_naive,4)}</p>
-          <p><strong>Betri/verri:</strong> ${num(row.improvement_pct,2)}%</p>
+          <div class="stats-list">
+            <div><strong>Tidspunkt:</strong> ${esc(row.timestamp)}</div>
+            <div><strong>Uppgjordur partur:</strong> ${fmtPercent(row.reported_pct, 1)}</div>
+            <div><strong>Uppgjordar atkvodur:</strong> ${fmtInt(row.reported_votes)}</div>
+            <div><strong>Model MAE:</strong> ${fmtNumber(row.mae_model, 4)}</div>
+            <div><strong>Naive MAE:</strong> ${fmtNumber(row.mae_naive, 4)}</div>
+            <div><strong>Model minus naive (MAE):</strong> ${fmtNumber(maeDelta(row.mae_model, row.mae_naive), 4)}</div>
+          </div>
         `;
 
         renderTraceTable(trace, row.timestamp);
-        renderHistoricalReplayMap(row.timestamp);
       }
 
       timepointSelect.onchange = renderTimepoint;
+      renderTimepoint();
+    }
+
+    const defaultIndex = replays.findIndex((r) => String(r.election || "").includes("2022"));
+    if (defaultIndex >= 0) {
+      electionSelect.value = String(defaultIndex);
     }
 
     electionSelect.onchange = renderElection;
@@ -599,79 +540,105 @@
   };
 
   window.renderPollsPage = async function () {
-    let p;
+    let payload;
     try {
-      p = await getJson(PAYLOAD_CANDIDATES);
+      payload = await getJson(PAYLOAD_CANDIDATES);
     } catch (err) {
-      showError('polls-summary', err?.message || 'Kundi ikki lesa dashboard payload');
-      showError('polls-table', err?.message || 'Kundi ikki lesa dashboard payload');
+      showError("polls-summary", err?.message || "Kundi ikki lesa dashboard payload");
+      showError("polls-table", err?.message || "Kundi ikki lesa dashboard payload");
       return;
     }
 
-    const block = p.latest_polls || {};
-    const rows = Array.isArray(block.rows) ? block.rows : [];
-    const familySelect = document.getElementById('poll-family');
-    const partySelect = document.getElementById('poll-party');
-    const summaryNode = document.getElementById('polls-summary');
-    const tableNode = document.getElementById('polls-table');
+    const block = payload.latest_polls || {};
+    const rows = safeRows(block.rows);
+    const familySelect = document.getElementById("poll-family");
+    const partySelect = document.getElementById("poll-party");
+    const summaryNode = document.getElementById("polls-summary");
+    const tableNode = document.getElementById("polls-table");
+
+    if (!summaryNode || !tableNode || !familySelect || !partySelect) return;
 
     if (!rows.length) {
-      summaryNode.innerHTML = '<p>Ongar veljarakanningar funnar seinastu 4 árini.</p>';
-      tableNode.innerHTML = '';
+      summaryNode.innerHTML = "<div class='callout'>Ongar veljarakanningar funnar seinastu 4 arini.</div>";
+      tableNode.innerHTML = "";
       return;
     }
 
-    const families = [...new Set(rows.map((r) => String(r.election_family || 'unknown')))].sort();
-    const parties = [...new Set(rows.map((r) => String(r.party_id || '').toUpperCase()).filter(Boolean))].sort();
+    const families = [...new Set(rows.map((r) => String(r.election_family || "unknown")))].sort();
+    const parties = [...new Set(rows.map((r) => String(r.party_id || "").toUpperCase()).filter(Boolean))].sort();
+    const partyLabels = {};
+    rows.forEach((r) => {
+      const id = String(r.party_id || "").toUpperCase();
+      if (!id) return;
+      const label = String(r.party_label || r.party_id || "").trim();
+      if (!partyLabels[id]) {
+        partyLabels[id] = label;
+      }
+    });
 
-    familySelect.innerHTML = ['all', ...families]
-      .map((v) => `<option value="${esc(v)}">${v === 'all' ? 'Allar' : esc(v)}</option>`)
-      .join('');
-    partySelect.innerHTML = ['all', ...parties]
-      .map((v) => `<option value="${esc(v)}">${v === 'all' ? 'Allir' : esc(v)}</option>`)
-      .join('');
+    familySelect.innerHTML = ["all", ...families]
+      .map((v) => `<option value="${esc(v)}">${v === "all" ? "Allar" : esc(v)}</option>`)
+      .join("");
+    partySelect.innerHTML = ["all", ...parties]
+      .map((v) => `<option value="${esc(v)}">${v === "all" ? "Allir" : esc(partyLabels[v] || v)}</option>`)
+      .join("");
 
     function renderTable() {
-      const fam = familySelect.value || 'all';
-      const party = partySelect.value || 'all';
-      const filtered = rows.filter((r) => {
-        const famOk = fam === 'all' || String(r.election_family || '') === fam;
-        const partyOk = party === 'all' || String(r.party_id || '').toUpperCase() === party;
-        return famOk && partyOk;
-      });
+      const fam = familySelect.value || "all";
+      const party = partySelect.value || "all";
+      const filtered = rows
+        .filter((r) => {
+          const famOk = fam === "all" || String(r.election_family || "") === fam;
+          const partyOk = party === "all" || String(r.party_id || "").toUpperCase() === party;
+          return famOk && partyOk;
+        })
+        .sort((a, b) => String(b.poll_date || "").localeCompare(String(a.poll_date || "")));
 
-      const pollIds = new Set(filtered.map((r) => String(r.poll_id || '')));
-      const latestDate = filtered.length ? filtered[0].poll_date : '-';
-      const earliestDate = filtered.length ? filtered[filtered.length - 1].poll_date : '-';
+      const pollIds = new Set(filtered.map((r) => String(r.poll_id || "")));
+      const latestDate = filtered.length ? filtered[0].poll_date : "-";
+      const earliestDate = filtered.length ? filtered[filtered.length - 1].poll_date : "-";
+
       summaryNode.innerHTML = `
-        <p><strong>Røðir:</strong> ${filtered.length}</p>
-        <p><strong>Einstakar kanningar:</strong> ${pollIds.size}</p>
-        <p><strong>Tíðarskeið:</strong> ${esc(earliestDate)} → ${esc(latestDate)}</p>
-        <p><strong>Keldur:</strong> ${esc((block.sources || []).join(', ') || '-')}</p>
+        <div class="stats-list">
+          <div><strong>Radir:</strong> ${fmtInt(filtered.length)}</div>
+          <div><strong>Einstakar kanningar:</strong> ${fmtInt(pollIds.size)}</div>
+          <div><strong>Tidarskeid:</strong> ${esc(earliestDate)} til ${esc(latestDate)}</div>
+          <div><strong>Keldur:</strong> ${esc(safeRows(block.sources).join(", ") || "-")}</div>
+        </div>
       `;
+
+      if (!filtered.length) {
+        tableNode.innerHTML = "<div class='callout'>Eingin rada passar til valdu filter.</div>";
+        return;
+      }
 
       tableNode.innerHTML = `
         <table class="status-table polls-table">
-          <thead><tr><th>Dagur</th><th>Valfamilja</th><th>Poll ID</th><th>Flokkur</th><th>Partur %</th><th>Úrtak</th><th>Stovnur</th></tr></thead>
+          <thead><tr><th>Dagur</th><th>Valfamilja</th><th>Poll ID</th><th>Flokkur</th><th>Partur %</th><th>Urtak</th><th>Stovnur</th></tr></thead>
           <tbody>
-            ${filtered.slice(0, 400).map((r) => `
+            ${filtered
+              .slice(0, 400)
+              .map(
+                (r) => `
               <tr>
                 <td>${esc(r.poll_date)}</td>
-                <td>${esc(r.election_family || '-')}</td>
-                <td>${esc(r.poll_id || '-')}</td>
-                <td>${esc(r.party_id || '-')}</td>
-                <td>${num(r.vote_share_percent, 1)}</td>
-                <td>${esc(r.sample_size ?? '-')}</td>
-                <td>${esc(r.polling_firm || '-')}</td>
+                <td>${esc(r.election_family || "-")}</td>
+                <td>${esc(r.poll_id || "-")}</td>
+                <td>${esc(r.party_label || r.party_id || "-")}</td>
+                <td>${fmtNumber(r.vote_share_percent, 1)}</td>
+                <td>${fmtInt(r.sample_size)}</td>
+                <td>${esc(r.polling_firm || "-")}</td>
               </tr>
-            `).join('')}
+            `
+              )
+              .join("")}
           </tbody>
         </table>
       `;
     }
 
-    familySelect.addEventListener('change', renderTable);
-    partySelect.addEventListener('change', renderTable);
+    familySelect.addEventListener("change", renderTable);
+    partySelect.addEventListener("change", renderTable);
     renderTable();
   };
 })();
